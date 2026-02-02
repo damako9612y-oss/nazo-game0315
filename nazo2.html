@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>第二の謎</title>
+
+<style>
+html, body {
+  width:100%;
+  height:100%;
+  margin:0;
+  font-family: Arial, sans-serif;
+}
+body {
+  background-image: url("index_bg.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding: 30px 0;
+}
+.overlay {
+  background: rgba(255,255,255,0.85);
+  padding: 25px 20px;
+  border-radius: 20px;
+  max-width:500px;
+  margin:30px auto;
+  text-align:center;
+}
+.lang-switch {
+  text-align:right;
+  margin-bottom:15px;
+}
+.lang-switch button {
+  font-size:0.9em;
+  padding:6px 12px;
+  background-color:#aaa;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  margin-left:5px;
+  cursor:pointer;
+}
+h2 {
+  font-size:1.8em;
+  color:#b03a2e;
+  margin-bottom:20px;
+}
+p.question {
+  font-size:1.1em;
+  margin-bottom:20px;
+}
+input.answer,
+input.keyword {
+  display:block;
+  width:80%;
+  max-width:250px;
+  margin:15px auto;
+  padding:10px;
+  font-size:1.1em;
+  border-radius:10px;
+  border:2px solid #b03a2e;
+  text-align:center;
+}
+.button {
+  display:block;
+  margin:10px auto;
+  padding:14px 25px;
+  width:90%;
+  max-width:300px;
+  font-size:1.1em;
+  color:white;
+  background-color:#b03a2e;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+}
+.button.secondary { background-color:#666; }
+
+.hint-area {
+  display:none;
+  margin-top:25px;
+  padding-top:20px;
+  border-top:2px dashed #b03a2e;
+}
+.notice {
+  font-size:0.9em;
+  color:#555;
+}
+.hint-title {
+  font-weight:bold;
+  color:#b03a2e;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+<div class="overlay">
+
+  <!-- 言語切替 -->
+  <div class="lang-switch">
+    <button onclick="location.href='nazo2.html'">日本語</button>
+    <button onclick="location.href='nazo2_en.html'">English</button>
+    <button onclick="location.href='nazo2_kr.html'">한국어</button>
+  </div>
+
+  <h2>第二の謎</h2>
+  <p class="question">飛行機の向かう先（国）は？</p>
+
+  <input type="text" class="answer" placeholder="回答を入力">
+  <button class="button" id="submitBtn">回答する</button>
+
+  <!-- ヒントボタン -->
+  <button class="button secondary" id="toggleHint">ヒントを見る ▼</button>
+
+  <!-- ヒントエリア -->
+  <div class="hint-area" id="hintArea">
+    <p>キーワードを入力するとヒントが表示されます</p>
+    <p class="notice">※キーワードはあなたの行先です。航空券をよく見て</p>
+
+    <input type="text" class="keyword" id="keyword2" placeholder="キーワードを入力">
+    <button class="button" id="showHint2">ヒント表示</button>
+
+    <p class="hint-title" id="hintTitle"></p>
+    <p id="hintText"></p>
+  </div>
+
+</div>
+
+<script>
+/* ===== 正誤判定 ===== */
+const correctAnswers = ["THAILAND", "THAI", "タイ", "タイ王国"];
+document.getElementById("submitBtn").addEventListener("click", () => {
+  const raw = document.querySelector(".answer").value.trim();
+  const upper = raw.toUpperCase();
+
+  if (correctAnswers.includes(raw) || correctAnswers.includes(upper)) {
+    window.location.href = "nazo3.html";
+  } else {
+    alert("ざんねん！もう一度考えてみてください。");
+  }
+});
+
+/* ===== ヒント開閉 ===== */
+const toggleBtn = document.getElementById("toggleHint");
+const hintArea = document.getElementById("hintArea");
+
+toggleBtn.addEventListener("click", () => {
+  const open = hintArea.style.display === "block";
+  hintArea.style.display = open ? "none" : "block";
+  toggleBtn.textContent = open ? "ヒントを見る ▼" : "ヒントを閉じる ▲";
+});
+
+/* ===== ヒント内容 ===== */
+const hints = [
+  { keys:["LHR","LONDON"], title:"ヒント①", text:"近くに飛行機は？" },
+  { keys:["ICN","SEOUL"], title:"ヒント②", text:"テーブルの上を探してみよう" },
+  { keys:["CDG","PARIS"], title:"ヒント③", text:"いろんな国のポストカードがいっぱい" },
+  { keys:["CAI","CAIRO"], title:"ヒント④", text:"飛行機の向きや位置は変えないで！" },
+  { keys:["SYD","SYDNEY"], title:"ヒント⑤", text:"最近新婦が行った国らしい" }
+];
+
+document.getElementById("showHint2").addEventListener("click", () => {
+  const kw = document.getElementById("keyword2").value.trim().toUpperCase();
+  const titleEl = document.getElementById("hintTitle");
+  const textEl = document.getElementById("hintText");
+
+  const result = hints.find(h => h.keys.includes(kw));
+  if (result) {
+    titleEl.textContent = result.title;
+    textEl.textContent = result.text;
+  } else {
+    titleEl.textContent = "";
+    textEl.textContent = "該当するヒントがありません。";
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Special Message</title>
+
+  <style>
+    html, body {
+      width:100%;
+      height:100%;
+      margin:0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-image: url("index_bg.jpg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      padding: 30px 0;
+      overflow-x: hidden;
+    }
+
+    #fireworks {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .overlay { 
+      position: relative;
+      z-index: 2;
+      background: rgba(255,255,255,0.9); 
+      padding:30px 22px; 
+      border-radius:22px; 
+      max-width:500px; 
+      margin:30px auto; 
+      text-align:center; 
+      animation: fadeUp 1.2s ease-out forwards;
+      opacity:0;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(25px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    .lang-switch {
+      text-align:right;
+      margin-bottom:15px;
+    }
+    .lang-switch button {
+      font-size:0.9em;
+      padding:6px 12px;
+      background-color:#aaa;
+      color:#fff;
+      border:none;
+      border-radius:6px;
+      margin-left:5px;
+      cursor:pointer;
+    }
+
+    h2 {
+      font-size:1.8em;
+      color:#b03a2e;
+      margin-bottom:18px;
+    }
+
+    .photo {
+      width:100%;
+      max-width:360px;
+      border-radius:18px;
+      margin:0 auto 25px;
+      display:block;
+    }
+
+    .message {
+      font-size:1.15em;
+      line-height:2.0;
+      text-align:left;
+      white-space: pre-line;
+      margin-bottom:25px;
+      font-weight:bold;
+    }
+
+    .end-note {
+      margin-top:30px;
+      font-size:0.9em;
+      color:#666;
+      font-style:italic;
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<div class="overlay">
+
+  <div class="lang-switch">
+    <button onclick="switchLang('ja')">日本語</button>
+    <button onclick="switchLang('en')">English</button>
+    <button onclick="switchLang('ko')">한국어</button>
+  </div>
+
+  <h2 id="displayName">Special Message</h2>
+
+  <img id="messageImage" class="photo" src="" alt="">
+
+  <div class="message" id="messageText"></div>
+
+  <div class="end-note">
+    (This concludes the riddle challenge. You may now close this page.)
+  </div>
+
+</div>
+
+<!-- ===== Message Master ===== -->
+<script src="messageMaster.js"></script>
+
+<script>
+  /* ===== Get URL parameter ===== */
+  function getParam(name) {
+    return new URLSearchParams(window.location.search).get(name);
+  }
+
+  const rawName = getParam("name") || "";
+  const input = rawName.trim();
+
+  const data = Object.values(MESSAGE_MASTER).find(
+    item => item.keyword === input
+  );
+
+  /* ===== Error handling ===== */
+  if (!data) {
+    document.getElementById("messageText").innerHTML =
+      "No message was found for this name.<br>Please check your name and try again.";
+    throw new Error("Message not found: " + input);
+  }
+
+  /* ===== Display ===== */
+  document.getElementById("displayName").textContent =
+    "To " + data.displayName;
+
+  document.getElementById("messageText").innerHTML = data.message;
+
+  const img = document.getElementById("messageImage");
+  img.src = data.image;
+  img.style.display = data.image ? "block" : "none";
+
+  /* ===== Language switch (file-based, same as nazo4) ===== */
+  function switchLang(newLang) {
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get("name") || "";
+
+    if (newLang === "ja") {
+      location.href = `message.html?name=${name}`;
+    } else if (newLang === "ko") {
+      location.href = `message_kr.html?name=${name}`;
+    } else {
+      location.href = `message_en.html?name=${name}`;
+    }
+  }
+
+  /* ===== Fireworks ===== */
+  const canvas = document.getElementById("fireworks");
+  const ctx = canvas.getContext("2d");
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener("resize", resize);
+
+  const colors = ["#FFD700", "#FF4C4C", "#4CC3FF", "#C77DFF"];
+  let particles = [];
+
+  function launchFirework() {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height * 0.45;
+    const color = colors[Math.floor(Math.random() * colors.length)];
+
+    for (let i = 0; i < 120; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 4 + 2;
+      particles.push({
+        x, y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        alpha: 1,
+        size: Math.random() * 3 + 2,
+        color
+      });
+    }
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy += 0.04;
+      p.alpha -= 0.014;
+
+      ctx.globalAlpha = p.alpha;
+      ctx.fillStyle = p.color;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fill();
+
+      if (p.alpha <= 0) particles.splice(i, 1);
+    }
+    ctx.globalAlpha = 1;
+    requestAnimationFrame(animate);
+  }
+
+  for (let i = 0; i < 12; i++) {
+    setTimeout(launchFirework, i * 280);
+  }
+  animate();
+</script>
+
+</body>
+</html>

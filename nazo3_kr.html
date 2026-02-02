@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>세 번째 퍼즐</title>
+
+<style>
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+body {
+  background-image: url("index_bg.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding: 30px 0;
+}
+.overlay {
+  background: rgba(255,255,255,0.85);
+  padding: 25px 20px;
+  border-radius: 20px;
+  max-width: 500px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+/* Language switch */
+.lang-switch {
+  text-align: right;
+  margin-bottom: 15px;
+}
+.lang-switch button {
+  font-size: 0.9em;
+  padding: 6px 12px;
+  background-color: #aaa;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+h2 {
+  font-size: 1.8em;
+  color: #b03a2e;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.05em;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+input.answer,
+input.keyword {
+  display: block;
+  width: 80%;
+  max-width: 250px;
+  margin: 15px auto;
+  padding: 10px;
+  font-size: 1.1em;
+  border-radius: 10px;
+  border: 2px solid #b03a2e;
+  text-align: center;
+}
+
+.button {
+  display: block;
+  margin: 10px auto;
+  padding: 14px 25px;
+  width: 90%;
+  max-width: 300px;
+  font-size: 1.1em;
+  color: white;
+  background-color: #b03a2e;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
+.button.secondary {
+  background-color: #666;
+}
+
+.hint-area {
+  display: none;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 2px dashed #b03a2e;
+}
+
+.notice {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.hint-title {
+  font-weight: bold;
+  color: #b03a2e;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class="overlay">
+
+  <!-- Language switch -->
+  <div class="lang-switch">
+    <button onclick="location.href='nazo3.html'">日本語</button>
+    <button onclick="location.href='nazo3_en.html'">English</button>
+    <button onclick="location.href='nazo3_kr.html'">한국어</button>
+  </div>
+
+  <h2>세 번째 퍼즐</h2>
+
+  <p>
+    흩어져 있는 단서들이 가리키는 단어는 무엇일까요?
+  </p>
+
+  <!-- Answer -->
+  <input type="text" class="answer" placeholder="정답을 입력하세요">
+  <button class="button" id="submitBtn">제출</button>
+
+  <!-- Hint button -->
+  <button class="button secondary" id="toggleHint">힌트 보기 ▼</button>
+
+  <!-- Hint area -->
+  <div class="hint-area" id="hintArea">
+    <p>키워드를 입력하면 힌트가 표시됩니다</p>
+    <p class="notice">※ 키워드는 당신의 목적지입니다. 항공권을 잘 확인하세요.</p>
+
+    <input type="text" class="keyword" id="keyword3" placeholder="키워드 입력">
+    <button class="button" id="showHint3">힌트 표시</button>
+
+    <p class="hint-title" id="hintTitle"></p>
+    <p id="hintText"></p>
+  </div>
+
+</div>
+
+<script>
+/* ===== 정답 판정 ===== */
+const correctAnswers = ["OSAKA", "大阪", "おおさか"];
+document.getElementById("submitBtn").addEventListener("click", () => {
+  const raw = document.querySelector(".answer").value.trim();
+  const upper = raw.toUpperCase();
+
+  if (correctAnswers.includes(raw) || correctAnswers.includes(upper)) {
+    window.location.href = "nazo4_kr.html";
+  } else {
+    alert("아쉽네요. 다시 한 번 생각해 보세요.");
+  }
+});
+
+/* ===== Hint toggle ===== */
+const toggleBtn = document.getElementById("toggleHint");
+const hintArea = document.getElementById("hintArea");
+
+toggleBtn.addEventListener("click", () => {
+  const open = hintArea.style.display === "block";
+  hintArea.style.display = open ? "none" : "block";
+  toggleBtn.textContent = open ? "힌트 보기 ▼" : "힌트 닫기 ▲";
+});
+
+/* ===== Hint content ===== */
+const hints = [
+  { keys:["LHR","LONDON"], title:"힌트 ①", text:"종이 아이템이 단서일지도 몰라요." },
+  { keys:["ICN","SEOUL"], title:"힌트 ②", text:"구석구석 살펴보세요." },
+  { keys:["CDG","PARIS"], title:"힌트 ③", text:"다섯 글자입니다." },
+  { keys:["CAI","CAIRO"], title:"힌트 ④", text:"오른쪽 위를 주목하세요." },
+  { keys:["SYD","SYDNEY"], title:"힌트 ⑤", text:"여기는 어디일까요?" }
+];
+
+document.getElementById("showHint3").addEventListener("click", () => {
+  const kw = document.getElementById("keyword3").value.trim().toUpperCase();
+  const titleEl = document.getElementById("hintTitle");
+  const textEl = document.getElementById("hintText");
+
+  if (!kw) {
+    titleEl.textContent = "";
+    textEl.textContent = "키워드를 입력해 주세요.";
+    return;
+  }
+
+  const result = hints.find(h => h.keys.includes(kw));
+  if (result) {
+    titleEl.textContent = result.title;
+    textEl.textContent = result.text;
+  } else {
+    titleEl.textContent = "";
+    textEl.textContent = "해당하는 힌트가 없습니다.";
+  }
+});
+</script>
+
+</body>
+</html>

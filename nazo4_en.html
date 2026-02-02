@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fourth Puzzle</title>
+
+<style>
+html, body { width:100%; height:100%; margin:0; }
+body {
+  background-image:url("index_bg.jpg");
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  font-family:Arial,sans-serif;
+  padding:30px 0;
+}
+.overlay {
+  background: rgba(255,255,255,0.85);
+  padding:25px 20px;
+  border-radius:20px;
+  max-width:500px;
+  margin:30px auto;
+  text-align:center;
+}
+.lang-switch {
+  text-align:right;
+  margin-bottom:15px;
+}
+.lang-switch button {
+  font-size:0.9em;
+  padding:6px 12px;
+  background-color:#aaa;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  margin-left:5px;
+  cursor:pointer;
+}
+h2 { font-size:1.8em; color:#b03a2e; margin-bottom:20px; }
+
+input.answer,
+input.keyword {
+  display:block;
+  width:80%;
+  max-width:250px;
+  margin:15px auto;
+  padding:10px;
+  font-size:1.1em;
+  border-radius:10px;
+  border:2px solid #b03a2e;
+  text-align:center;
+}
+
+.button {
+  display:block;
+  margin:10px auto;
+  padding:14px 25px;
+  width:90%;
+  max-width:300px;
+  font-size:1.1em;
+  color:white;
+  background-color:#b03a2e;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+}
+.button.secondary { background-color:#666; }
+
+img.puzzle-image {
+  max-width:100%;
+  margin:15px 0;
+  border-radius:10px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+
+.hint-area {
+  display:none;
+  margin-top:25px;
+  padding-top:20px;
+  border-top:2px dashed #b03a2e;
+}
+.notice { font-size:0.9em; color:#555; }
+.hint-title { font-weight:bold; color:#b03a2e; margin-top:10px; }
+</style>
+</head>
+
+<body>
+<div class="overlay">
+
+  <!-- Language switch -->
+  <div class="lang-switch">
+    <button onclick="location.href='nazo4.html'">日本語</button>
+    <button onclick="location.href='nazo4_en.html'">English</button>
+    <button onclick="location.href='nazo4_kr.html'">한국어</button>
+  </div>
+
+  <h2>Fourth Puzzle</h2>
+
+  <!-- Image -->
+  <img src="puzzle_image.jpg" alt="Clue image" class="puzzle-image">
+
+  <!-- Answer -->
+  <input type="text" class="answer" placeholder="Enter your answer">
+  <button class="button" id="submitBtn4">Submit</button>
+
+  <!-- Hint toggle -->
+  <button class="button secondary" id="toggleHint">View Hint ▼</button>
+
+  <!-- Hint area -->
+  <div class="hint-area" id="hintArea">
+    <p>Enter a keyword to reveal a hint</p>
+    <p class="notice">* The keyword is your destination. Check your flight ticket carefully.</p>
+
+    <input type="text" class="keyword" id="keyword4" placeholder="Enter keyword">
+    <button class="button" id="showHint4">Show Hint</button>
+
+    <p class="hint-title" id="hintTitle"></p>
+    <p id="hintText"></p>
+  </div>
+
+</div>
+
+<script>
+/* ===== Answer check ===== */
+const correctAnswers = ["315", "３１５"];
+document.getElementById("submitBtn4").addEventListener("click", () => {
+  const raw = document.querySelector(".answer").value.trim();
+  if (correctAnswers.includes(raw)) {
+    window.location.href = "ending_en.html";
+  } else {
+    alert("Incorrect. Please try again.");
+  }
+});
+
+/* ===== Hint toggle ===== */
+const toggleBtn = document.getElementById("toggleHint");
+const hintArea = document.getElementById("hintArea");
+
+toggleBtn.addEventListener("click", () => {
+  const open = hintArea.style.display === "block";
+  hintArea.style.display = open ? "none" : "block";
+  toggleBtn.textContent = open ? "View Hint ▼" : "Close Hint ▲";
+});
+
+/* ===== Hint content ===== */
+const hints = [
+  { keys:["LHR","LONDON"], title:"Hint ①", text:"The colour proportions of the pie chart are not important." },
+  { keys:["ICN","SEOUL"], title:"Hint ②", text:"The answer has three characters." },
+  { keys:["CDG","PARIS"], title:"Hint ③", text:"What is the couple’s wedding anniversary?" },
+  { keys:["CAI","CAIRO"], title:"Hint ④", text:"Look carefully at the colours." },
+  { keys:["SYD","SYDNEY"], title:"Hint ⑤", text:"The answer is a number." }
+];
+
+document.getElementById("showHint4").addEventListener("click", () => {
+  const kw = document.getElementById("keyword4").value.trim().toUpperCase();
+  const result = hints.find(h => h.keys.includes(kw));
+  document.getElementById("hintTitle").textContent = result ? result.title : "";
+  document.getElementById("hintText").textContent =
+    result ? result.text : "No matching hint found.";
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Third Puzzle</title>
+
+<style>
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+body {
+  background-image: url("index_bg.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding: 30px 0;
+}
+.overlay {
+  background: rgba(255,255,255,0.85);
+  padding: 25px 20px;
+  border-radius: 20px;
+  max-width: 500px;
+  margin: 30px auto;
+  text-align: center;
+}
+
+/* Language switch */
+.lang-switch {
+  text-align: right;
+  margin-bottom: 15px;
+}
+.lang-switch button {
+  font-size: 0.9em;
+  padding: 6px 12px;
+  background-color: #aaa;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  margin-left: 5px;
+  cursor: pointer;
+}
+
+h2 {
+  font-size: 1.8em;
+  color: #b03a2e;
+  margin-bottom: 20px;
+}
+
+p {
+  font-size: 1.05em;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+input.answer,
+input.keyword {
+  display: block;
+  width: 80%;
+  max-width: 250px;
+  margin: 15px auto;
+  padding: 10px;
+  font-size: 1.1em;
+  border-radius: 10px;
+  border: 2px solid #b03a2e;
+  text-align: center;
+}
+
+.button {
+  display: block;
+  margin: 10px auto;
+  padding: 14px 25px;
+  width: 90%;
+  max-width: 300px;
+  font-size: 1.1em;
+  color: white;
+  background-color: #b03a2e;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+}
+.button.secondary {
+  background-color: #666;
+}
+
+.hint-area {
+  display: none;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 2px dashed #b03a2e;
+}
+
+.notice {
+  font-size: 0.9em;
+  color: #555;
+}
+
+.hint-title {
+  font-weight: bold;
+  color: #b03a2e;
+  margin-top: 10px;
+}
+</style>
+</head>
+
+<body>
+<div class="overlay">
+
+  <!-- Language switch -->
+  <div class="lang-switch">
+    <button onclick="location.href='nazo3.html'">日本語</button>
+    <button onclick="location.href='nazo3_en.html'">English</button>
+    <button onclick="location.href='nazo3_kr.html'">한국어</button>
+  </div>
+
+  <h2>Third Puzzle</h2>
+
+  <p>
+    Find the scattered fragments and think what they mean.
+   </p>
+
+  <!-- Answer -->
+  <input type="text" class="answer" placeholder="Enter your answer">
+  <button class="button" id="submitBtn">Submit</button>
+
+  <!-- Hint button -->
+  <button class="button secondary" id="toggleHint">View Hint ▼</button>
+
+  <!-- Hint area -->
+  <div class="hint-area" id="hintArea">
+    <p>Enter a keyword to reveal a hint</p>
+    <p class="notice">* The keyword is your destination. Check your flight ticket carefully.</p>
+
+    <input type="text" class="keyword" id="keyword3" placeholder="Enter keyword">
+    <button class="button" id="showHint3">Show Hint</button>
+
+    <p class="hint-title" id="hintTitle"></p>
+    <p id="hintText"></p>
+  </div>
+
+</div>
+
+<script>
+/* ===== Answer check ===== */
+const correctAnswers = ["OSAKA", "大阪", "おおさか"];
+document.getElementById("submitBtn").addEventListener("click", () => {
+  const raw = document.querySelector(".answer").value.trim();
+  const upper = raw.toUpperCase();
+
+  if (correctAnswers.includes(raw) || correctAnswers.includes(upper)) {
+    window.location.href = "nazo4_en.html";
+  } else {
+    alert("Incorrect. Please try again.");
+  }
+});
+
+/* ===== Hint toggle ===== */
+const toggleBtn = document.getElementById("toggleHint");
+const hintArea = document.getElementById("hintArea");
+
+toggleBtn.addEventListener("click", () => {
+  const open = hintArea.style.display === "block";
+  hintArea.style.display = open ? "none" : "block";
+  toggleBtn.textContent = open ? "View Hint ▼" : "Close Hint ▲";
+});
+
+/* ===== Hint content ===== */
+const hints = [
+  { keys:["LHR","LONDON"], title:"Hint ①", text:"Paper items might be the key." },
+  { keys:["ICN","SEOUL"], title:"Hint ②", text:"Look carefully at every corner." },
+  { keys:["CDG","PARIS"], title:"Hint ③", text:"Five letters." },
+  { keys:["CAI","CAIRO"], title:"Hint ④", text:"Pay attention to the top right." },
+  { keys:["SYD","SYDNEY"], title:"Hint ⑤", text:"Where is this place?" }
+];
+
+document.getElementById("showHint3").addEventListener("click", () => {
+  const kw = document.getElementById("keyword3").value.trim().toUpperCase();
+  const titleEl = document.getElementById("hintTitle");
+  const textEl = document.getElementById("hintText");
+
+  if (!kw) {
+    titleEl.textContent = "";
+    textEl.textContent = "Please enter a keyword.";
+    return;
+  }
+
+  const result = hints.find(h => h.keys.includes(kw));
+  if (result) {
+    titleEl.textContent = result.title;
+    textEl.textContent = result.text;
+  } else {
+    titleEl.textContent = "";
+    textEl.textContent = "No matching hint found.";
+  }
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>네 번째 퍼즐</title>
+
+<style>
+html, body { width:100%; height:100%; margin:0; }
+body {
+  background-image:url("index_bg.jpg");
+  background-size:cover;
+  background-position:center center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  font-family:Arial,sans-serif;
+  padding:30px 0;
+}
+.overlay {
+  background: rgba(255,255,255,0.85);
+  padding:25px 20px;
+  border-radius:20px;
+  max-width:500px;
+  margin:30px auto;
+  text-align:center;
+}
+.lang-switch {
+  text-align:right;
+  margin-bottom:15px;
+}
+.lang-switch button {
+  font-size:0.9em;
+  padding:6px 12px;
+  background-color:#aaa;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  margin-left:5px;
+  cursor:pointer;
+}
+h2 { font-size:1.8em; color:#b03a2e; margin-bottom:20px; }
+
+input.answer,
+input.keyword {
+  display:block;
+  width:80%;
+  max-width:250px;
+  margin:15px auto;
+  padding:10px;
+  font-size:1.1em;
+  border-radius:10px;
+  border:2px solid #b03a2e;
+  text-align:center;
+}
+
+.button {
+  display:block;
+  margin:10px auto;
+  padding:14px 25px;
+  width:90%;
+  max-width:300px;
+  font-size:1.1em;
+  color:white;
+  background-color:#b03a2e;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+}
+.button.secondary { background-color:#666; }
+
+img.puzzle-image {
+  max-width:100%;
+  margin:15px 0;
+  border-radius:10px;
+  box-shadow:0 4px 8px rgba(0,0,0,0.2);
+}
+
+.hint-area {
+  display:none;
+  margin-top:25px;
+  padding-top:20px;
+  border-top:2px dashed #b03a2e;
+}
+.notice {
+  font-size:0.9em;
+  color:#555;
+}
+.hint-title {
+  font-weight:bold;
+  color:#b03a2e;
+  margin-top:10px;
+}
+</style>
+</head>
+
+<body>
+<div class="overlay">
+
+  <!-- 언어 전환 -->
+  <div class="lang-switch">
+    <button onclick="location.href='nazo4.html'">日本語</button>
+    <button onclick="location.href='nazo4_en.html'">English</button>
+    <button onclick="location.href='nazo4_kr.html'">한국어</button>
+  </div>
+
+  <h2>네 번째 퍼즐</h2>
+
+  <!-- 이미지 -->
+  <img src="puzzle_image.jpg" alt="힌트 이미지" class="puzzle-image">
+
+  <!-- 정답 -->
+  <input type="text" class="answer" placeholder="정답을 입력하세요">
+  <button class="button" id="submitBtn4">제출</button>
+
+  <!-- 힌트 버튼 -->
+  <button class="button secondary" id="toggleHint">힌트 보기 ▼</button>
+
+  <!-- 힌트 영역 -->
+  <div class="hint-area" id="hintArea">
+    <p>키워드를 입력하면 힌트가 표시됩니다</p>
+    <p class="notice">※ 키워드는 당신의 목적지입니다. 항공권을 잘 확인하세요.</p>
+
+    <input type="text" class="keyword" id="keyword4" placeholder="키워드 입력">
+    <button class="button" id="showHint4">힌트 표시</button>
+
+    <p class="hint-title" id="hintTitle"></p>
+    <p id="hintText"></p>
+  </div>
+
+</div>
+
+<script>
+/* ===== 정답 판정 ===== */
+const correctAnswers = ["315", "３１５"];
+document.getElementById("submitBtn4").addEventListener("click", () => {
+  const raw = document.querySelector(".answer").value.trim();
+  if (correctAnswers.includes(raw)) {
+    window.location.href = "ending_kr.html";
+  } else {
+    alert("아쉽네요. 다시 한 번 생각해 보세요.");
+  }
+});
+
+/* ===== 힌트 열기 / 닫기 ===== */
+const toggleBtn = document.getElementById("toggleHint");
+const hintArea = document.getElementById("hintArea");
+
+toggleBtn.addEventListener("click", () => {
+  const open = hintArea.style.display === "block";
+  hintArea.style.display = open ? "none" : "block";
+  toggleBtn.textContent = open ? "힌트 보기 ▼" : "힌트 닫기 ▲";
+});
+
+/* ===== 힌트 내용 ===== */
+const hints = [
+  { keys:["LHR","LONDON"], title:"힌트 ①", text:"원 그래프의 색 비율은 중요하지 않습니다." },
+  { keys:["ICN","SEOUL"], title:"힌트 ②", text:"정답은 세 글자입니다." },
+  { keys:["CDG","PARIS"], title:"힌트 ③", text:"신랑 신부의 결혼기념일은 언제인가요?" },
+  { keys:["CAI","CAIRO"], title:"힌트 ④", text:"색깔을 잘 살펴보세요!" },
+  { keys:["SYD","SYDNEY"], title:"힌트 ⑤", text:"정답은 숫자입니다." }
+];
+
+document.getElementById("showHint4").addEventListener("click", () => {
+  const kw = document.getElementById("keyword4").value.trim().toUpperCase();
+  const titleEl = document.getElementById("hintTitle");
+  const textEl = document.getElementById("hintText");
+
+  if (!kw) {
+    titleEl.textContent = "";
+    textEl.textContent = "키워드를 입력해 주세요.";
+    return;
+  }
+
+  const result = hints.find(h => h.keys.includes(kw));
+  if (result) {
+    titleEl.textContent = result.title;
+    textEl.textContent = result.text;
+  } else {
+    titleEl.textContent = "";
+    textEl.textContent = "해당하는 힌트가 없습니다.";
+  }
+});
+</script>
+
+</body>
+</html>

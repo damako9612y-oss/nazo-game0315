@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>エンディング</title>
+
+  <style>
+    html, body {
+      width:100%;
+      height:100%;
+      margin:0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background-image: url("index_bg.jpg");
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      padding: 30px 0;
+      overflow-x: hidden;
+    }
+
+    #fireworks {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .overlay { 
+      position: relative;
+      z-index: 2;
+      background: rgba(255,255,255,0.88); 
+      padding:30px 22px; 
+      border-radius:22px; 
+      max-width:500px; 
+      margin:30px auto; 
+      text-align:center; 
+      animation: fadeUp 1.2s ease-out forwards;
+      opacity:0;
+    }
+
+    @keyframes fadeUp {
+      from { opacity:0; transform: translateY(25px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.9); opacity:0; }
+      to   { transform: scale(1); opacity:1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    .lang-switch {
+      text-align:right;
+      margin-bottom:15px;
+    }
+    .lang-switch button {
+      font-size:0.9em;
+      padding:6px 12px;
+      background-color:#aaa;
+      color:#fff;
+      border:none;
+      border-radius:6px;
+      margin-left:5px;
+      cursor:pointer;
+    }
+
+    h2 {
+      font-size:1.9em;
+      color:#b03a2e;
+      margin-bottom:25px;
+      animation: pop 0.9s ease-out forwards;
+    }
+
+    .message {
+      font-size:1.05em;
+      line-height:1.9;
+      text-align:left;
+      margin-bottom:28px;
+      white-space: pre-line;
+    }
+
+    .name-text {
+      font-size:0.95em;
+      margin-bottom:6px;
+      text-align:left;
+      font-weight:bold;
+    }
+
+    .name-note {
+      font-size:0.8em;
+      color:#666;
+      text-align:left;
+      margin-bottom:10px;
+    }
+
+    input.name {
+      display:block;
+      width:80%;
+      max-width:250px;
+      margin:10px auto 20px;
+      padding:10px;
+      font-size:1.05em;
+      border-radius:10px;
+      border:2px solid #b03a2e;
+      text-align:center;
+    }
+
+    a.button {
+      display:block;
+      margin:10px auto;
+      padding:14px 25px;
+      width:90%;
+      max-width:300px;
+      text-decoration:none;
+      font-size:1.1em;
+      color:white;
+      background-color:#b03a2e;
+      border-radius:30px;
+      opacity:0.4;
+      pointer-events:none;
+    }
+
+    a.button.active {
+      opacity:1;
+      pointer-events:auto;
+      animation: pulse 1.6s ease-in-out infinite;
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<div class="overlay">
+
+  <div class="lang-switch">
+    <button onclick="location.href='ending.html'">日本語</button>
+    <button onclick="location.href='ending_en.html'">English</button>
+    <button onclick="location.href='ending_kr.html'">한국어</button>
+  </div>
+
+  <h2>すべての謎を解き明かしました</h2>
+
+  <div class="message">
+🎉おめでとうございます🎉
+あなたは4つの謎をすべて解き、
+ヴェネツィアの怪人に盗まれていた
+特別なメッセージを
+取り戻すことに成功しました。
+
+これは、あなたのためだけに用意された
+特別なメッセージです。
+  </div>
+
+  <div class="name-text">
+    メッセージを受け取るあなたのフルネームを<br>
+    カタカナで入力してください。
+  </div>
+
+  <div class="name-note">
+    ※姓と名の間はスペースを開けないでください
+  </div>
+
+  <input type="text" class="name" id="nameInput" placeholder="例：カタヤママサフミ">
+
+  <a href="#" class="button" id="readBtn">特別なメッセージを読む</a>
+
+</div>
+
+<script>
+  const nameInput = document.getElementById("nameInput");
+  const readBtn = document.getElementById("readBtn");
+
+  nameInput.addEventListener("input", () => {
+    readBtn.classList.toggle("active", nameInput.value.trim() !== "");
+  });
+
+  readBtn.addEventListener("click", () => {
+    const name = encodeURIComponent(nameInput.value.trim());
+    const file = location.pathname;
+
+    if (file.includes("_en")) {
+      location.href = `message_en.html?name=${name}`;
+    } else if (file.includes("_kr")) {
+      location.href = `message_kr.html?name=${name}`;
+    } else {
+      location.href = `message.html?name=${name}`;
+    }
+  });
+</script>
+
+</body>
+</html>
