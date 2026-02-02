@@ -6,80 +6,146 @@
 <title>첫 번째 수수께끼</title>
 
 <style>
-html, body { width:100%; height:100%; margin:0; font-family: Arial, sans-serif; }
+/* ===== スマホ前提リセット ===== */
+html, body {
+  width: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ===== 背景（nazo2と同一） ===== */
 body {
   background-image: url("index_bg.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  padding: 30px 0;
+  padding: 24px 0;
 }
+
+/* ===== メイン枠 ===== */
 .overlay { 
-  background: rgba(255,255,255,0.85); 
-  padding:25px 20px; 
-  border-radius:20px; 
-  max-width:500px; 
-  margin:30px auto; 
-  text-align:center; 
+  background: rgba(255,255,255,0.88); 
+  padding: 22px 16px; 
+  border-radius: 20px; 
+  width: calc(100% - 32px);
+  max-width: 520px;
+  margin: 0 auto 32px;
+  box-sizing: border-box;
+  text-align: center;
 }
-.lang-switch { text-align:right; margin-bottom:15px; }
+
+/* ===== 言語切替 ===== */
+.lang-switch {
+  text-align: right;
+  margin-bottom: 12px;
+}
 .lang-switch button {
-  font-size:0.9em;
-  padding:6px 12px;
-  background-color:#aaa;
-  color:#fff;
-  border:none;
-  border-radius:6px;
-  margin-left:5px;
-  cursor:pointer;
+  font-size: 14px;
+  padding: 6px 10px;
+  background-color: #aaa;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  margin-left: 4px;
 }
 
-h2 { font-size:1.8em; color:#b03a2e; margin-bottom:20px; }
+/* ===== 見出し ===== */
+h2 {
+  font-size: 1.6em;
+  color: #b03a2e;
+  margin-bottom: 18px;
+}
 
-.text-above { font-size:1.05em; font-weight:bold; text-align:left; margin-bottom:6px; }
-.card-row { display:flex; justify-content:center; flex-wrap:wrap; margin-bottom:15px; }
-.card { background:#f9f9f9; border:2px solid #b03a2e; border-radius:10px; padding:10px 14px; margin:4px; font-weight:bold; font-size:1.2em; color:#b03a2e; min-width:30px; text-align:center; }
-.arrow { font-weight:bold; font-size:2.2em; color:#b03a2e; margin:0 8px; line-height:36px; }
-.card-spaced { margin-left:8px; margin-right:8px; }
+/* ===== 説明文 ===== */
+.text-above {
+  font-size: 1em;
+  font-weight: bold;
+  text-align: left;
+  margin: 10px 0 6px;
+}
 
+/* ===== カード行（絶対1行） ===== */
+.card-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  flex-wrap: nowrap;
+}
+
+/* ===== カード（完全固定サイズ） ===== */
+.card {
+  width: 42px;
+  height: 42px;
+  background: #f9f9f9;
+  border: 2px solid #b03a2e;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #b03a2e;
+  box-sizing: border-box;
+}
+
+/* ===== 矢印 ===== */
+.arrow {
+  font-size: 2em;
+  font-weight: bold;
+  color: #b03a2e;
+  line-height: 42px;
+  white-space: nowrap;
+}
+
+/* ===== 入力欄（iOSズーム防止） ===== */
 input.answer,
 input.keyword {
-  display:block;
-  width:80%;
-  max-width:250px;
-  margin:15px auto;
-  padding:10px;
-  font-size:1.1em;
-  border-radius:10px;
-  border:2px solid #b03a2e;
-  text-align:center;
+  display: block;
+  width: 80%;
+  max-width: 260px;
+  margin: 14px auto;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 10px;
+  border: 2px solid #b03a2e;
+  text-align: center;
 }
 
+/* ===== ボタン ===== */
 .button {
-  display:block;
-  margin:10px auto;
-  padding:14px 25px;
-  width:90%;
-  max-width:300px;
-  font-size:1.1em;
-  color:white;
-  background-color:#b03a2e;
-  border-radius:30px;
-  border:none;
-  cursor:pointer;
+  display: block;
+  margin: 10px auto;
+  padding: 14px 20px;
+  width: 90%;
+  max-width: 300px;
+  font-size: 1.05em;
+  color: white;
+  background-color: #b03a2e;
+  border-radius: 30px;
+  border: none;
 }
-.button.secondary { background-color:#666; }
+.button.secondary {
+  background-color: #666;
+}
 
+/* ===== ヒント ===== */
 .hint-area {
-  display:none;
-  margin-top:25px;
-  padding-top:20px;
-  border-top:2px dashed #b03a2e;
+  display: none;
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 2px dashed #b03a2e;
 }
-
-.notice { font-size:0.9em; color:#555; }
-.hint-title { font-weight:bold; color:#b03a2e; margin-top:10px; }
+.notice {
+  font-size: 0.9em;
+  color: #555;
+}
+.hint-title {
+  font-weight: bold;
+  color: #b03a2e;
+  margin-top: 10px;
+}
 </style>
 </head>
 
