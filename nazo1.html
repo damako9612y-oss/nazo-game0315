@@ -73,41 +73,47 @@ h2 {
   margin-bottom: 6px;
 }
 
+/* ★ 改行させないカード行 ★ */
 .card-row {
   display: flex;
   justify-content: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;        /* ← 絶対に改行しない */
+  gap: 6px;
   margin-bottom: 15px;
+  white-space: nowrap;
 }
 
+/* カード本体 */
 .card {
   background: #f9f9f9;
   border: 2px solid #b03a2e;
   border-radius: 10px;
   padding: 10px 14px;
-  margin: 4px;
   font-weight: bold;
   font-size: 1.2em;
   color: #b03a2e;
-  min-width: 30px;
   text-align: center;
+  flex: 0 0 auto;           /* 縮みすぎ防止 */
 }
 
+/* 矢印 */
 .arrow {
   font-weight: bold;
   font-size: 2.2em;
   color: #b03a2e;
-  margin: 0 8px;
   line-height: 36px;
+  white-space: nowrap;
 }
 
-.card-spaced {
-  margin-left: 8px;
-  margin-right: 8px;
+/* ===== スマホ専用：カードを縮めて1行維持 ===== */
+@media (max-width: 480px) {
+  .card {
+    font-size: 1em;
+    padding: 8px 10px;
+  }
 }
 
-/* ===== 入力欄（最重要） ===== */
-/* Safariズーム対策：16px以上をpx指定 */
+/* ===== 入力欄（ズーム防止） ===== */
 input.answer,
 input.keyword {
   display: block;
@@ -115,10 +121,8 @@ input.keyword {
   max-width: 260px;
   margin: 15px auto;
   padding: 10px;
-
-  font-size: 16px;   /* ★これがズーム防止の決定打 */
+  font-size: 16px;          /* ← Safariズーム防止 */
   line-height: 1.4;
-
   border-radius: 10px;
   border: 2px solid #b03a2e;
   text-align: center;
@@ -138,7 +142,6 @@ input.keyword {
   border: none;
   cursor: pointer;
 }
-
 .button.secondary {
   background-color: #666;
 }
@@ -150,12 +153,10 @@ input.keyword {
   padding-top: 20px;
   border-top: 2px dashed #b03a2e;
 }
-
 .notice {
   font-size: 0.9em;
   color: #555;
 }
-
 .hint-title {
   font-weight: bold;
   color: #b03a2e;
@@ -202,7 +203,7 @@ input.keyword {
 
   <div class="card-row">
     <div class="arrow">☞☞☞</div>
-    <div class="card card-spaced">?</div>
+    <div class="card">?</div>
     <div class="card">?</div>
     <div class="card">?</div>
     <div class="card">?</div>
