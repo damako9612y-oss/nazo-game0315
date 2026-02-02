@@ -57,10 +57,13 @@ h2 {
   margin-bottom: 18px;
 }
 
-/* ===== 質問文 ===== */
-p.question {
-  font-size: 1.05em;
-  margin-bottom: 20px;
+/* ===== 画像（nazo4専用・最重要） ===== */
+.puzzle-image {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 16px auto 20px;
+  border-radius: 12px;
 }
 
 /* ===== 入力欄（iOSズーム防止） ===== */
@@ -115,6 +118,7 @@ input.keyword {
 </head>
 
 <body>
+
 <div class="overlay">
 
   <div class="lang-switch">
@@ -147,6 +151,7 @@ input.keyword {
 
 <script>
 const correctAnswers = ["315", "３１５"];
+
 document.getElementById("submitBtn4").addEventListener("click", () => {
   const raw = document.querySelector(".answer").value.trim();
   if (correctAnswers.includes(raw)) {
