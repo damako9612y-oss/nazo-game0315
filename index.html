@@ -6,7 +6,6 @@
 <title>謎解きオープニング</title>
 
 <style>
-/* ===== リセット ===== */
 html, body {
   width: 100%;
   margin: 0;
@@ -14,7 +13,6 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ===== 背景 ===== */
 body {
   background-image: url("index_bg.jpg");
   background-size: cover;
@@ -23,7 +21,6 @@ body {
   padding: 20px 0;
 }
 
-/* ===== メイン枠 ===== */
 .overlay {
   background: rgba(255,255,255,0.88);
   padding: 18px 16px;
@@ -35,24 +32,6 @@ body {
   text-align: center;
 }
 
-/* ===== 言語切替 ===== */
-.lang-area {
-  margin-bottom: 12px;
-}
-.lang-btn {
-  font-size: 14px;
-  padding: 6px 12px;
-  background-color: #666;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  margin: 0 3px;
-}
-.lang-btn.sub {
-  background-color: #aaa;
-}
-
 /* ===== タイトル ===== */
 h1 {
   font-size: 1.6em;
@@ -60,14 +39,21 @@ h1 {
   margin-bottom: 14px;
 }
 
-/* ===== 怪人の手紙 ===== */
+/* ===== 紙（サイズ固定） ===== */
 .letter {
   background: url("paper_with_seal.jpg");
   background-size: cover;
-  background-position: center 88%; /* 封蝋を上に寄せる */
-  padding: 26px 22px 24px;         /* 下余白を最小限 */
+  background-position: center;
   border-radius: 15px;
   margin: 18px auto;
+  min-height: 520px; /* ← 紙サイズ固定 */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* ===== 文字ブロック ===== */
+.letter-content {
+  margin-top: 40px; /* ← ここで上下位置を調整 */
 }
 
 /* メッセージ本文 */
@@ -78,36 +64,26 @@ h1 {
   text-align: center;
 }
 
-/* 署名 */
-.signature {
-  display: block;
-  margin-top: 16px;
-  font-size: 1em;
-  opacity: 0.9;
-}
-
-/* ===== タイピングカーソル ===== */
+/* ===== カーソル ===== */
 #cursor {
   display: inline-block;
   margin-left: 2px;
   animation: blink 1s infinite;
 }
-
 @keyframes blink {
   50% { opacity: 0; }
 }
 
-/* ===== 注意文 ===== */
+/* 注意文 */
 .notice {
   margin-top: 12px;
   font-size: 0.9em;
   opacity: 0.85;
   color: #444;
-  line-height: 1.4;
 }
 
-/* ===== ボタン ===== */
-button.start-btn {
+/* ボタン */
+.start-btn {
   display: block;
   margin: 20px auto 0;
   padding: 14px 28px;
@@ -116,7 +92,6 @@ button.start-btn {
   background-color: #b03a2e;
   border: none;
   border-radius: 30px;
-  cursor: pointer;
 }
 </style>
 </head>
@@ -125,27 +100,19 @@ button.start-btn {
 
 <div class="overlay">
 
-  <!-- 言語切替 -->
-  <div class="lang-area">
-    <button class="lang-btn">日本語</button>
-    <button class="lang-btn sub" onclick="location.href='index_en.html'">English</button>
-    <button class="lang-btn sub" onclick="location.href='index_kr.html'">한국어</button>
-  </div>
-
   <h1>ヴェネチアの怪人からの挑戦</h1>
 
-  <!-- 怪人の手紙 -->
   <div class="letter">
-    <div id="message"></div>
+    <div class="letter-content">
+      <div id="message"></div>
+    </div>
   </div>
 
-  <!-- 注意文 -->
   <p class="notice">
     ※これは正解の早さを競うものではありません。<br>
     ご自由なペースでお楽しみください。
   </p>
 
-  <!-- 開始ボタン -->
   <button class="start-btn" onclick="location.href='nazo1.html'">
     謎を始める
   </button>
@@ -178,13 +145,11 @@ target.appendChild(cursor);
 function typeWriter() {
   if (i < text.length) {
     cursor.remove();
-
     if (text[i] === "\n") {
       target.innerHTML += "<br>";
     } else {
       target.innerHTML += text[i];
     }
-
     target.appendChild(cursor);
     i++;
     setTimeout(typeWriter, speed);
