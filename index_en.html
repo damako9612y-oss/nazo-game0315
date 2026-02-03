@@ -1,133 +1,188 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Puzzle Opening</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Puzzle Opening</title>
 
-  <style>
+<style>
 html, body {
   width: 100%;
-  height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
+  overflow-x: hidden;
 }
+
 body {
   background-image: url("index_bg.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  background-attachment: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 30px 0;
+  padding: 20px 0;
 }
+
 .overlay {
-  background: rgba(255, 255, 255, 0.75);
-  padding: 30px 20px;
-  margin: 0 20px;
+  background: rgba(255,255,255,0.88);
+  padding: 18px 16px;
   border-radius: 20px;
+  width: calc(100% - 32px);
+  max-width: 520px;
+  margin: 0 auto 28px;
+  box-sizing: border-box;
   text-align: center;
-  max-width: 500px;
-  width: 100%;
 }
+
+/* language switch (same as nazo1) */
+.lang-switch {
+  text-align: right;
+  margin-bottom: 12px;
+}
+.lang-switch button {
+  font-size: 14px;
+  padding: 6px 10px;
+  background-color: #aaa;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  margin-left: 4px;
+  cursor: pointer;
+}
+
+/* title */
 h1 {
   font-size: 1.6em;
   color: #b03a2e;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
+  white-space: nowrap;
 }
-p {
-  font-size: 1em;
-  line-height: 1.6;
-  margin-bottom: 15px;
-}
-video {
-  width: 100%;
-  max-width: 360px;
+
+/* paper */
+.letter {
+  background: url("paper_with_seal.jpg");
+  background-size: cover;
+  background-position: center;
   border-radius: 15px;
-  margin: 20px auto;
-  display: block;
+  margin: 18px auto;
+  min-height: 520px;
+  padding: 20px;
+  box-sizing: border-box;
 }
-button {
-  margin-top: 10px;
-  font-size: 1.2em;
-  padding: 15px 30px;
-  background-color: #b03a2e;
+
+.letter-content {
+  margin-top: 40px;
+}
+
+/* message */
+#message {
+  font-family: "Times New Roman", "Noto Serif", serif;
+  font-size: 1.05em;
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* cursor */
+#cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* notice */
+.notice {
+  margin-top: 12px;
+  font-size: 0.9em;
+  opacity: 0.85;
+  color: #444;
+  line-height: 1.4;
+}
+
+/* button */
+.start-btn {
+  display: block;
+  margin: 20px auto 0;
+  padding: 14px 28px;
+  font-size: 1.1em;
   color: white;
+  background-color: #b03a2e;
   border: none;
   border-radius: 30px;
   cursor: pointer;
 }
-button:hover {
-  background-color: #e74c3c;
-}
-.lang-btn {
-  font-size: 0.9em;
-  padding: 6px 12px;
-  background-color: #aaa;
-  color: white;
-  border: none;
-  border-radius: 15px;
-  cursor: pointer;
-  margin-right: 5px;
-}
-.lang-btn.active {
-  background-color: #666;
-}
-.lang-btn:hover {
-  background-color: #888;
-}
-  </style>
+</style>
 </head>
 
 <body>
+
 <div class="overlay">
 
-  <!-- Language switch -->
-  <div style="margin-bottom:15px;">
-    <button class="lang-btn sub" onclick="location.href='index.html'">日本語</button>
-    <button class="lang-btn active">English</button>
-    <button class="lang-btn sub" onclick="location.href='index_kr.html'">한국어</button>
+  <div class="lang-switch">
+    <button onclick="location.href='index.html'">日本語</button>
+    <button onclick="location.href='index_en.html'">English</button>
+    <button onclick="location.href='index_kr.html'">한국어</button>
   </div>
 
-  <h1>Challenge from the Phantom of Venice</h1>
+  <h1>The Phantom of Venice’s Challenge</h1>
 
-  <p>
-    A special message for you has been hidden somewhere<br>
-    by the “Phantom of Venice”.
+  <div class="letter">
+    <div class="letter-content">
+      <div id="message"></div>
+    </div>
+  </div>
+
+  <p class="notice">
+    ※This is not a race for speed.<br>
+    Please enjoy at your own pace.
   </p>
 
-  <p>
-    Clues can be found around the venue<br>
-    and on your table.
-  </p>
-
-  <p>
-    Work together with your tablemates,<br>
-    solve the puzzles, and uncover the message.
-  </p>
-
-  <p>
-    This is not a race for speed.
-  </p>
-
-  <p>
-    Please enjoy your food and conversation<br>
-    and proceed at your own pace.
-  </p>
-
-  <p><strong>Challenge from the Phantom of Venice</strong></p>
-
-  <video controls playsinline>
-    <source src="intro.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-
-  <button onclick="location.href='nazo1_en.html'">
+  <button class="start-btn" onclick="location.href='nazo1_en.html'">
     Start the Puzzle
   </button>
 
 </div>
+
+<script>
+const text =
+`…Welcome.
+
+I am the Phantom of Venice.
+
+To those gathered at this wedding,
+I have prepared a small trial.
+
+Gather the clues scattered around the venue,
+and unravel the hidden message.
+
+        The Phantom of Venice`;
+
+const target = document.getElementById("message");
+let i = 0;
+const speed = 120;
+
+const cursor = document.createElement("span");
+cursor.id = "cursor";
+cursor.textContent = "|";
+target.appendChild(cursor);
+
+function typeWriter() {
+  if (i < text.length) {
+    cursor.remove();
+    if (text[i] === "\n") {
+      target.innerHTML += "<br>";
+    } else {
+      target.innerHTML += text[i];
+    }
+    target.appendChild(cursor);
+    i++;
+    setTimeout(typeWriter, speed);
+  } else {
+    cursor.remove();
+  }
+}
+typeWriter();
+</script>
+
 </body>
 </html>
