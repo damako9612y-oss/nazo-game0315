@@ -194,8 +194,16 @@ input.keyword {
 
   <input type="text" class="answer" placeholder="回答を入力">
   <button class="button" id="submitBtn">回答する</button>
+<p id="errorMsg" style="
+  display:none;
+  margin-top:10px;
+  color:#b03a2e;
+  font-weight:bold;
+">
+  ざんねん！もう一度考えてみてください。
+</p>
 
-  <button class="button secondary" id="toggleHint">ヒントを見る ▼</button>
+ <button class="button secondary" id="toggleHint">ヒントを見る ▼</button>
 
   <div class="hint-area" id="hintArea">
     <p>キーワードを入力するとヒントが表示されます</p>
@@ -217,9 +225,9 @@ document.getElementById("submitBtn").addEventListener("click", () => {
   const v = document.querySelector(".answer").value.trim().toUpperCase();
   if (v === correctAnswer) {
     location.href = "nazo2.html";
-  } else {
-    alert("ざんねん！もう一度考えてみてください。");
-  }
+ } else {
+  document.getElementById("errorMsg").style.display = "block";
+}
 });
 
 const toggleBtn = document.getElementById("toggleHint");
