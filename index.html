@@ -32,6 +32,7 @@ body {
   text-align: center;
 }
 
+/* ===== 言語切替（元のまま） ===== */
 .lang-area {
   margin-bottom: 15px;
 }
@@ -42,7 +43,11 @@ body {
   color: white;
   border: none;
   border-radius: 15px;
+  cursor: pointer;
   margin: 0 3px;
+}
+.lang-btn.sub {
+  background-color: #aaa;
 }
 
 h1 {
@@ -65,7 +70,7 @@ p {
   padding: 24px;
   border-radius: 15px;
   margin: 20px auto;
-  min-height: 300px; /* 完全固定 */
+  min-height: 300px;
 }
 
 #message {
@@ -75,12 +80,12 @@ p {
   text-align: center;
 }
 
-/* ===== 封蝋（矩形完全排除） ===== */
+/* ===== 封蝋 ===== */
 .seal {
   opacity: 0;
   margin-top: 16px;
   animation: sealIn 1.5s ease forwards;
-  animation-delay: 10s;
+  animation-delay: 12s;
 }
 
 .seal-mask {
@@ -88,7 +93,7 @@ p {
   height: 76px;
   margin: 0 auto;
   border-radius: 50%;
-  overflow: hidden;        /* ★ 四角を物理的に切る */
+  overflow: hidden;
 }
 
 .seal-mask img {
@@ -98,7 +103,7 @@ p {
 }
 
 /* ===== ボタン ===== */
-.start-btn {
+button.start-btn {
   display: block;
   margin: 24px auto 0;
   padding: 14px 28px;
@@ -110,7 +115,7 @@ p {
   cursor: pointer;
   opacity: 0;
   animation: fadeIn 1.5s ease forwards;
-  animation-delay: 11.5s;
+  animation-delay: 13.5s;
 }
 
 @keyframes sealIn { to { opacity: 1; } }
@@ -122,13 +127,23 @@ p {
 
 <div class="overlay">
 
+  <!-- 言語切替：完全復元 -->
   <div class="lang-area">
     <button class="lang-btn">日本語</button>
+    <button class="lang-btn sub" onclick="location.href='index_en.html'">English</button>
+    <button class="lang-btn sub" onclick="location.href='index_kr.html'">한국어</button>
   </div>
 
   <h1>ヴェネチアの怪人からの挑戦</h1>
 
-  <p>皆さま宛の特別なメッセージが、「ヴェネチアの怪人」によって隠されました。</p>
+  <p>
+    皆さま宛の特別なメッセージが、<br>
+    「ヴェネチアの怪人」によって隠されました。
+  </p>
+  <p>会場やテーブルの中に、手がかりが残されています。</p>
+  <p>協力して謎を解き、特別なメッセージを見つけてください。</p>
+  <p>正解の早さを競うものではありません。</p>
+  <p>ご自由なペースでお楽しみください。</p>
 
   <div class="letter">
     <div id="message"></div>
@@ -148,27 +163,24 @@ p {
 
 <script>
 const text =
-`……ようこそ。
-
-私はヴェネチアの怪人。
-
-この披露宴に招かれし者たちへ
-ささやかな試練を用意した。
-
-会場に散らばる手がかりを集め
+`……ようこそ。\n\n私はヴェネチアの怪人。\n\nこの披露宴に招かれし者たちへ
+ささやかな試練を用意した。\n\n会場に散らばる手がかりを集め
 隠されたメッセージを解き明かせ。`;
 
 const target = document.getElementById("message");
-let index = 0;
-const speed = 120; // ← ゆっくり
-
-const node = document.createTextNode("");
-target.appendChild(node);
+let i = 0;
+const speed = 120;
 
 function typeWriter() {
-  if (index < text.length) {
-    node.textContent += text[index];
-    index++;
+  if (i < text.length) {
+    if (text[i] === "\n") {
+      target.innerHTML += "<br>";
+    } else {
+      const span = document.createElement("span");
+      span.textContent = text[i];
+      target.appendChild(span);
+    }
+    i++;
     setTimeout(typeWriter, speed);
   }
 }
