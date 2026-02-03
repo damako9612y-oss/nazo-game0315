@@ -6,6 +6,7 @@
 <title>謎解きオープニング</title>
 
 <style>
+/* ===== リセット ===== */
 html, body {
   width: 100%;
   margin: 0;
@@ -13,6 +14,7 @@ html, body {
   overflow-x: hidden;
 }
 
+/* ===== 背景 ===== */
 body {
   background-image: url("index_bg.jpg");
   background-size: cover;
@@ -21,6 +23,7 @@ body {
   padding: 20px 0;
 }
 
+/* ===== メイン枠 ===== */
 .overlay {
   background: rgba(255,255,255,0.88);
   padding: 18px 16px;
@@ -32,33 +35,50 @@ body {
   text-align: center;
 }
 
-/* ===== タイトル ===== */
+/* ===== 言語切替 ===== */
+.lang-area {
+  margin-bottom: 12px;
+}
+.lang-btn {
+  font-size: 14px;
+  padding: 6px 12px;
+  background-color: #666;
+  color: white;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  margin: 0 3px;
+}
+.lang-btn.sub {
+  background-color: #aaa;
+}
+
+/* ===== タイトル（1行固定） ===== */
 h1 {
   font-size: 1.6em;
   color: #b03a2e;
   margin-bottom: 14px;
-
-  white-space: nowrap;   /* ← これが核心 */
+  white-space: nowrap;
 }
 
-/* ===== 紙（サイズ固定） ===== */
+/* ===== ペーパー（サイズ固定） ===== */
 .letter {
   background: url("paper_with_seal.jpg");
   background-size: cover;
   background-position: center;
   border-radius: 15px;
   margin: 18px auto;
-  min-height: 520px; /* ← 紙サイズ固定 */
+  min-height: 520px; /* ← 固定 */
   padding: 20px;
   box-sizing: border-box;
 }
 
-/* ===== 文字ブロック ===== */
+/* ===== 文字配置用コンテナ ===== */
 .letter-content {
-  margin-top: 40px; /* ← ここで上下位置を調整 */
+  margin-top: 40px; /* ← ここで署名〜封蝋の距離を調整 */
 }
 
-/* メッセージ本文 */
+/* ===== メッセージ ===== */
 #message {
   font-family: "Yuji Syuku", "Hiragino Mincho Pro", serif;
   font-size: 1.1em;
@@ -76,15 +96,16 @@ h1 {
   50% { opacity: 0; }
 }
 
-/* 注意文 */
+/* ===== 注意文 ===== */
 .notice {
   margin-top: 12px;
   font-size: 0.9em;
   opacity: 0.85;
   color: #444;
+  line-height: 1.4;
 }
 
-/* ボタン */
+/* ===== ボタン ===== */
 .start-btn {
   display: block;
   margin: 20px auto 0;
@@ -94,6 +115,7 @@ h1 {
   background-color: #b03a2e;
   border: none;
   border-radius: 30px;
+  cursor: pointer;
 }
 </style>
 </head>
@@ -102,19 +124,29 @@ h1 {
 
 <div class="overlay">
 
+  <!-- 言語切替 -->
+  <div class="lang-area">
+    <button class="lang-btn">日本語</button>
+    <button class="lang-btn sub" onclick="location.href='index_en.html'">English</button>
+    <button class="lang-btn sub" onclick="location.href='index_kr.html'">한국어</button>
+  </div>
+
   <h1>ヴェネチアの怪人からの挑戦</h1>
 
+  <!-- ペーパー -->
   <div class="letter">
     <div class="letter-content">
       <div id="message"></div>
     </div>
   </div>
 
+  <!-- 注意文 -->
   <p class="notice">
     ※これは正解の早さを競うものではありません。<br>
     ご自由なペースでお楽しみください。
   </p>
 
+  <!-- 開始ボタン -->
   <button class="start-btn" onclick="location.href='nazo1.html'">
     謎を始める
   </button>
@@ -165,4 +197,3 @@ typeWriter();
 
 </body>
 </html>
-
