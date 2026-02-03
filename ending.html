@@ -9,7 +9,7 @@
 /* ===== 共通リセット（nazo2準拠） ===== */
 html, body {
   width: 100%;
-  height: 100%;   /* ← ★ここを追加するだけ */
+  height: 100%;
   margin: 0;
   font-family: Arial, sans-serif;
   overflow-x: hidden;
@@ -79,11 +79,12 @@ body {
   cursor: pointer;
 }
 
-/* ===== 見出し ===== */
+/* ===== 見出し（★1行固定＋自動縮小） ===== */
 h2 {
-  font-size: 1.6em;
+  font-size: clamp(1.35em, 5vw, 1.6em); /* ← ここがポイント */
   color: #b03a2e;
   margin-bottom: 18px;
+  white-space: nowrap;                 /* ← 改行させない */
   animation: pop 0.9s ease-out forwards;
 }
 
@@ -209,8 +210,7 @@ function launchFirework() {
     const angle = Math.random() * Math.PI * 2;
     const speed = Math.random() * 4 + 2;
     particles.push({
-      x,
-      y,
+      x, y,
       vx: Math.cos(angle) * speed,
       vy: Math.sin(angle) * speed,
       alpha: 1,
@@ -247,7 +247,6 @@ function animateFireworks() {
 for (let i = 0; i < 14; i++) {
   setTimeout(launchFirework, i * 250);
 }
-
 animateFireworks();
 
 /* ===== 名前入力判定 ===== */
@@ -278,4 +277,3 @@ readBtn.addEventListener("click", (e) => {
 
 </body>
 </html>
-
