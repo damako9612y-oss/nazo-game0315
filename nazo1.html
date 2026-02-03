@@ -6,7 +6,7 @@
 <title>第一の謎</title>
 
 <style>
-/* ===== 共通リセット（スマホ前提） ===== */
+/* ===== スマホ前提リセット ===== */
 html, body {
   width: 100%;
   margin: 0;
@@ -14,7 +14,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ===== 背景（全ページ共通） ===== */
+/* ===== 背景（nazo2と同一） ===== */
 body {
   background-image: url("index_bg.jpg");
   background-size: cover;
@@ -24,10 +24,10 @@ body {
 }
 
 /* ===== メイン枠 ===== */
-.overlay {
-  background: rgba(255,255,255,0.88);
-  padding: 22px 16px;
-  border-radius: 20px;
+.overlay { 
+  background: rgba(255,255,255,0.88); 
+  padding: 22px 16px; 
+  border-radius: 20px; 
   width: calc(100% - 32px);
   max-width: 520px;
   margin: 0 auto 32px;
@@ -57,10 +57,46 @@ h2 {
   margin-bottom: 18px;
 }
 
-/* ===== 質問文 ===== */
-p.question {
-  font-size: 1.05em;
-  margin-bottom: 20px;
+/* ===== 説明文 ===== */
+.text-above {
+  font-size: 1em;
+  font-weight: bold;
+  text-align: left;
+  margin: 10px 0 6px;
+}
+
+/* ===== カード行（絶対1行） ===== */
+.card-row {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 14px;
+  flex-wrap: nowrap;
+}
+
+/* ===== カード（完全固定サイズ） ===== */
+.card {
+  width: 42px;
+  height: 42px;
+  background: #f9f9f9;
+  border: 2px solid #b03a2e;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #b03a2e;
+  box-sizing: border-box;
+}
+
+/* ===== 矢印 ===== */
+.arrow {
+  font-size: 2em;
+  font-weight: bold;
+  color: #b03a2e;
+  line-height: 42px;
+  white-space: nowrap;
 }
 
 /* ===== 入力欄（iOSズーム防止） ===== */
@@ -89,7 +125,6 @@ input.keyword {
   background-color: #b03a2e;
   border-radius: 30px;
   border: none;
-  cursor: pointer;
 }
 .button.secondary {
   background-color: #666;
@@ -115,12 +150,13 @@ input.keyword {
 </head>
 
 <body>
+<div class="overlay">
 
-<div class="lang-switch">
-  <button onclick="location.href='nazo1.html'">日本語</button>
-  <button onclick="location.href='nazo1_en.html'">English</button>
-  <button onclick="location.href='nazo1_kr.html'">한국어</button>
-</div>
+  <div class="lang-switch">
+    <button onclick="location.href='nazo1.html'">日本語</button>
+    <button onclick="location.href='nazo1_en.html'">English</button>
+    <button onclick="location.href='nazo1_kr.html'">한국어</button>
+  </div>
 
   <h2>第一の謎</h2>
 
@@ -188,11 +224,11 @@ document.getElementById("submitBtn").addEventListener("click", () => {
 
 const toggleBtn = document.getElementById("toggleHint");
 const hintArea = document.getElementById("hintArea");
-toggleBtn.onclick = () => {
+toggleBtn.addEventListener("click", () => {
   const open = hintArea.style.display === "block";
   hintArea.style.display = open ? "none" : "block";
   toggleBtn.textContent = open ? "ヒントを見る ▼" : "ヒントを閉じる ▲";
-};
+});
 
 const hints = [
   { keys:["LHR","LONDON"], title:"ヒント①", text:"最後まで行くと最初に戻るよ" },
@@ -202,12 +238,12 @@ const hints = [
   { keys:["SYD","SYDNEY"], title:"ヒント⑤", text:"結婚式に関係する言葉" }
 ];
 
-document.getElementById("showHint1").onclick = () => {
+document.getElementById("showHint1").addEventListener("click", () => {
   const kw = document.getElementById("keyword1").value.trim().toUpperCase();
   const r = hints.find(h => h.keys.includes(kw));
   document.getElementById("hintTitle").textContent = r ? r.title : "";
   document.getElementById("hintText").textContent = r ? r.text : "該当するヒントがありません。";
-};
+});
 </script>
 
 </body>
