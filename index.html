@@ -6,7 +6,7 @@
 <title>謎解きオープニング</title>
 
 <style>
-/* ===== 共通リセット（スマホ前提） ===== */
+/* ===== 共通リセット ===== */
 html, body {
   width: 100%;
   margin: 0;
@@ -14,14 +14,13 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ===== 背景（nazoページと完全統一） ===== */
+/* ===== 背景 ===== */
 body {
   background-image: url("index_bg.jpg");
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   padding: 24px 0;
-  min-height: 100vh; /* ★ 背景スケール感を揃える */
 }
 
 /* ===== メイン枠 ===== */
@@ -31,7 +30,7 @@ body {
   border-radius: 20px;
   width: calc(100% - 32px);
   max-width: 520px;
-  margin: 0 auto 60px; /* 下余白を少し多め */
+  margin: 0 auto 32px;
   box-sizing: border-box;
   text-align: center;
 }
@@ -39,7 +38,6 @@ body {
 /* ===== 言語切替 ===== */
 .lang-area {
   margin-bottom: 15px;
-  text-align: center;
 }
 .lang-btn {
   font-size: 14px;
@@ -60,30 +58,49 @@ h1 {
   font-size: 1.6em;
   color: #b03a2e;
   margin-bottom: 20px;
-  white-space: nowrap; /* ★ 必ず1行 */
 }
 
-/* 超小画面保険 */
-@media (max-width: 360px) {
-  h1 {
-    font-size: 1.45em;
-  }
-}
-
-/* ===== 文章 ===== */
+/* ===== 通常文章 ===== */
 p {
   font-size: 1em;
   line-height: 1.6;
   margin-bottom: 15px;
 }
 
-/* ===== 動画 ===== */
-video {
-  display: block;
-  width: 100%;
-  max-width: 360px;
-  margin: 20px auto;
+/* ===== 怪人の手紙 ===== */
+.letter {
+  background: url("paper.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 20px;
   border-radius: 15px;
+  margin: 20px auto;
+
+  min-height: 280px; /* ★ 背景が動かない */
+}
+
+/* メッセージ本文 */
+#message {
+  font-family: "Yuji Syuku", "Hiragino Mincho Pro", serif;
+  font-size: 1.1em;
+  line-height: 1.9;
+  text-align: center;     /* ★ 中央寄り */
+  white-space: pre-wrap;
+}
+
+/* ===== 封蝋 ===== */
+.seal {
+  opacity: 0;
+  margin-top: 10px;
+  animation: sealIn 1.5s ease forwards;
+  animation-delay: 6.5s;
+}
+
+.seal img {
+  width: 70px;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25)); /* ★ 四角感消し */
 }
 
 /* ===== スタートボタン ===== */
@@ -97,6 +114,19 @@ button.start-btn {
   border: none;
   border-radius: 30px;
   cursor: pointer;
+
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+  animation-delay: 7.5s;
+}
+
+/* ===== アニメーション ===== */
+@keyframes sealIn {
+  to { opacity: 1; }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
 }
 </style>
 </head>
@@ -123,15 +153,47 @@ button.start-btn {
   <p>正解の早さを競うものではありません。</p>
   <p>ご自由なペースでお楽しみください。</p>
 
-  <video controls playsinline preload="metadata">
-    <source src="intro.mp4" type="video/mp4">
-  </video>
+  <!-- 怪人の手紙 -->
+  <div class="letter">
+    <p id="message"></p>
+
+    <div class="seal">
+      <img src="seal.png" alt="封蝋">
+    </div>
+  </div>
 
   <button class="start-btn" onclick="location.href='nazo1.html'">
     謎を始める
   </button>
 
 </div>
+
+<script>
+const text =
+`……ようこそ。
+
+私はヴェネチアの怪人。
+
+この披露宴に招かれし者たちへ
+ささやかな試練を用意した。
+
+会場に散らばる手がかりを集め
+隠されたメッセージを解き明かせ。`;
+
+let i = 0;
+const speed = 60;
+const target = document.getElementById("message");
+
+function typeWriter() {
+  if (i < text.length) {
+    target.innerHTML += text[i] === "\n" ? "<br>" : text[i];
+    i++;
+    setTimeout(typeWriter, speed);
+  }
+}
+
+typeWriter();
+</script>
 
 </body>
 </html>
