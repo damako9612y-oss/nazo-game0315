@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>エンディング</title>
+<title>엔딩</title>
 
 <style>
 /* ===== 共通リセット（nazo2準拠） ===== */
 html, body {
   width: 100%;
-  height: 100%;
+  height: 100%;   /* ★ 日本語・英語版と同じ修正 */
   margin: 0;
   font-family: Arial, sans-serif;
   overflow-x: hidden;
@@ -24,7 +24,7 @@ body {
   padding: 24px 0;
 }
 
-/* ===== 花火Canvas ===== */
+/* ===== Fireworks Canvas ===== */
 #fireworks {
   position: fixed;
   inset: 0;
@@ -33,10 +33,10 @@ body {
 }
 
 /* ===== メイン枠 ===== */
-.overlay {
+.overlay { 
   position: relative;
   z-index: 2;
-  background: rgba(255,255,255,0.88);
+  background: rgba(255,255,255,0.88); 
   padding: 22px 16px;
   border-radius: 20px;
   width: calc(100% - 32px);
@@ -79,12 +79,11 @@ body {
   cursor: pointer;
 }
 
-/* ===== 見出し（★1行固定＋自動縮小） ===== */
+/* ===== 見出し ===== */
 h2 {
-  font-size: clamp(1.35em, 5vw, 1.6em); /* ← ここがポイント */
+  font-size: 1.6em;
   color: #b03a2e;
   margin-bottom: 18px;
-  white-space: nowrap;                 /* ← 改行させない */
   animation: pop 0.9s ease-out forwards;
 }
 
@@ -100,22 +99,16 @@ h2 {
 /* ===== 名前入力 ===== */
 .name-text {
   font-size: 0.95em;
+  margin-bottom: 8px;
   text-align: left;
   font-weight: bold;
-  margin-bottom: 6px;
-}
-.name-note {
-  font-size: 0.8em;
-  color: #555;
-  text-align: left;
-  margin-bottom: 10px;
 }
 
 input.name {
   display: block;
   width: 80%;
-  max-width: 260px;
-  margin: 14px auto;
+  max-width: 250px;
+  margin: 14px auto 20px;
   padding: 10px;
   font-size: 16px; /* iOSズーム防止 */
   border-radius: 10px;
@@ -130,14 +123,13 @@ a.button {
   padding: 14px 20px;
   width: 90%;
   max-width: 300px;
+  text-decoration: none;
   font-size: 1.05em;
   color: white;
   background-color: #b03a2e;
   border-radius: 30px;
-  text-decoration: none;
   opacity: 0.4;
   pointer-events: none;
-  cursor: pointer;
 }
 a.button.active {
   opacity: 1;
@@ -159,34 +151,53 @@ a.button.active {
     <button onclick="location.href='ending_kr.html'">한국어</button>
   </div>
 
-  <h2>すべての謎を解き明かしました</h2>
+  <h2>모든 수수께끼를 해결했습니다</h2>
 
   <div class="message">
-🎉おめでとうございます🎉
-あなたはすべての謎を解き、
-特別なメッセージを
-取り戻すことに成功しました。
+🎉 축하합니다! 🎉
+당신은 네 개의 수수께끼를 모두 풀고
+베네치아의 괴인에게 도난당했던
+특별한 메시지를
+되찾는 데 성공했습니다.
 
-これは、あなたのためだけに用意された
-最後のメッセージです。
+이 메시지는
+오직 당신만을 위해 준비된
+아주 특별한 메시지입니다.
   </div>
 
   <div class="name-text">
-    メッセージを受け取るあなたのフルネームを<br>
-    カタカナで入力してください。
+    메시지를 받기 위해 이름(이름만)을 대문자로 입력해 주세요.
   </div>
 
-  <div class="name-note">
-    ※姓と名の間はスペースを入れないでください
-  </div>
+  <input type="text" class="name" id="nameInput" placeholder="예: ALEX / EMILY">
 
-  <input type="text" class="name" id="nameInput" placeholder="例：カタヤママサフミ">
-
-  <a href="#" class="button" id="readBtn">特別なメッセージを読む</a>
+  <a href="#" class="button" id="readBtn">특별한 메시지 읽기</a>
 
 </div>
 
 <script>
+/* ===== Name Input ===== */
+const nameInput = document.getElementById("nameInput");
+const readBtn = document.getElementById("readBtn");
+
+nameInput.addEventListener("input", () => {
+  readBtn.classList.toggle("active", nameInput.value.trim() !== "");
+});
+
+/* ===== Navigation (言語判定そのまま) ===== */
+readBtn.addEventListener("click", () => {
+  const name = encodeURIComponent(nameInput.value.trim());
+  const file = location.pathname;
+
+  if (file.includes("_en")) {
+    location.href = `message_en.html?name=${name}`;
+  } else if (file.includes("_kr")) {
+    location.href = `message_kr.html?name=${name}`;
+  } else {
+    location.href = `message.html?name=${name}`;
+  }
+});
+
 /* ===== Fireworks ===== */
 const canvas = document.getElementById("fireworks");
 const ctx = canvas.getContext("2d");
@@ -220,9 +231,8 @@ function launchFirework() {
   }
 }
 
-function animateFireworks() {
+function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
   for (let i = particles.length - 1; i >= 0; i--) {
     const p = particles[i];
     p.x += p.vx;
@@ -238,41 +248,15 @@ function animateFireworks() {
 
     if (p.alpha <= 0) particles.splice(i, 1);
   }
-
   ctx.globalAlpha = 1;
-  requestAnimationFrame(animateFireworks);
+  requestAnimationFrame(animate);
 }
 
 /* 初期打ち上げ */
 for (let i = 0; i < 14; i++) {
   setTimeout(launchFirework, i * 250);
 }
-animateFireworks();
-
-/* ===== 名前入力判定 ===== */
-const nameInput = document.getElementById("nameInput");
-const readBtn = document.getElementById("readBtn");
-
-nameInput.addEventListener("input", () => {
-  readBtn.classList.toggle("active", nameInput.value.trim() !== "");
-});
-
-/* ===== 遷移 ===== */
-readBtn.addEventListener("click", (e) => {
-  e.preventDefault();
-  if (!readBtn.classList.contains("active")) return;
-
-  const name = encodeURIComponent(nameInput.value.trim());
-  const path = location.pathname;
-
-  if (path.includes("_en")) {
-    location.href = `message_en.html?name=${name}`;
-  } else if (path.includes("_kr")) {
-    location.href = `message_kr.html?name=${name}`;
-  } else {
-    location.href = `message.html?name=${name}`;
-  }
-});
+animate();
 </script>
 
 </body>
