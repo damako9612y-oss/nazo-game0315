@@ -6,6 +6,7 @@
 <title>謎解きオープニング</title>
 
 <style>
+/* ===== スマホ前提リセット ===== */
 html, body {
   width: 100%;
   margin: 0;
@@ -13,14 +14,16 @@ html, body {
   overflow-x: hidden;
 }
 
+/* ===== 背景 ===== */
 body {
   background-image: url("index_bg.jpg");
   background-size: cover;
-  background-position: center;
+  background-position: center center;
   background-repeat: no-repeat;
   padding: 24px 0;
 }
 
+/* ===== メイン枠 ===== */
 .overlay {
   background: rgba(255,255,255,0.88);
   padding: 22px 16px;
@@ -32,7 +35,7 @@ body {
   text-align: center;
 }
 
-/* ===== 言語切替（元のまま） ===== */
+/* ===== 言語切替 ===== */
 .lang-area {
   margin-bottom: 15px;
 }
@@ -50,56 +53,37 @@ body {
   background-color: #aaa;
 }
 
+/* ===== タイトル ===== */
 h1 {
   font-size: 1.6em;
   color: #b03a2e;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
+/* ===== 説明文（1行扱い） ===== */
 p {
   font-size: 1em;
   line-height: 1.6;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
-/* ===== 怪人の手紙 ===== */
+/* ===== 怪人の手紙（紙＋封蝋一体） ===== */
 .letter {
-  background: url("paper.jpg");
+  background: url("paper_with_seal.jpg");
   background-size: cover;
   background-position: center;
-  padding: 24px;
+  padding: 32px 24px 64px; /* 下に余白多め（封蝋分） */
   border-radius: 15px;
   margin: 20px auto;
-  min-height: 300px;
+  min-height: 360px;
 }
 
+/* メッセージ本文 */
 #message {
   font-family: "Yuji Syuku", "Hiragino Mincho Pro", serif;
-  font-size: 1.15em;
-  line-height: 2;
+  font-size: 1.1em;
+  line-height: 1.6;
   text-align: center;
-}
-
-/* ===== 封蝋 ===== */
-.seal {
-  opacity: 0;
-  margin-top: 16px;
-  animation: sealIn 1.5s ease forwards;
-  animation-delay: 12s;
-}
-
-.seal-mask {
-  width: 76px;
-  height: 76px;
-  margin: 0 auto;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.seal-mask img {
-  width: 90px;
-  margin: -7px;
-  filter: drop-shadow(0 3px 4px rgba(0,0,0,0.3));
 }
 
 /* ===== ボタン ===== */
@@ -115,11 +99,12 @@ button.start-btn {
   cursor: pointer;
   opacity: 0;
   animation: fadeIn 1.5s ease forwards;
-  animation-delay: 13.5s;
+  animation-delay: 9.5s;
 }
 
-@keyframes sealIn { to { opacity: 1; } }
-@keyframes fadeIn { to { opacity: 1; } }
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
 </style>
 </head>
 
@@ -127,7 +112,7 @@ button.start-btn {
 
 <div class="overlay">
 
-  <!-- 言語切替：完全復元 -->
+  <!-- 言語切替 -->
   <div class="lang-area">
     <button class="lang-btn">日本語</button>
     <button class="lang-btn sub" onclick="location.href='index_en.html'">English</button>
@@ -136,23 +121,16 @@ button.start-btn {
 
   <h1>ヴェネチアの怪人からの挑戦</h1>
 
-  <p>
-    皆さま宛の特別なメッセージが、<br>
-    「ヴェネチアの怪人」によって隠されました。
-  </p>
+  <!-- 冒頭説明：1行 -->
+  <p>皆さま宛の特別なメッセージが、「ヴェネチアの怪人」によって隠されました。</p>
   <p>会場やテーブルの中に、手がかりが残されています。</p>
   <p>協力して謎を解き、特別なメッセージを見つけてください。</p>
   <p>正解の早さを競うものではありません。</p>
   <p>ご自由なペースでお楽しみください。</p>
 
+  <!-- 怪人の手紙 -->
   <div class="letter">
     <div id="message"></div>
-
-    <div class="seal">
-      <div class="seal-mask">
-        <img src="seal.png" alt="封蝋">
-      </div>
-    </div>
   </div>
 
   <button class="start-btn" onclick="location.href='nazo1.html'">
@@ -163,13 +141,19 @@ button.start-btn {
 
 <script>
 const text =
-`……ようこそ。\n\n私はヴェネチアの怪人。\n\nこの披露宴に招かれし者たちへ
-ささやかな試練を用意した。\n\n会場に散らばる手がかりを集め
+`……ようこそ。
+
+私はヴェネチアの怪人。
+
+この披露宴に招かれし者たちへ
+ささやかな試練を用意した。
+
+会場に散らばる手がかりを集め
 隠されたメッセージを解き明かせ。`;
 
 const target = document.getElementById("message");
 let i = 0;
-const speed = 120;
+const speed = 120; // 表示をゆっくり
 
 function typeWriter() {
   if (i < text.length) {
@@ -184,6 +168,7 @@ function typeWriter() {
     setTimeout(typeWriter, speed);
   }
 }
+
 typeWriter();
 </script>
 
