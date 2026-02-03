@@ -20,13 +20,13 @@ body {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  padding: 20px 0; /* 少し詰める */
+  padding: 20px 0;
 }
 
 /* ===== メイン枠 ===== */
 .overlay {
   background: rgba(255,255,255,0.88);
-  padding: 18px 16px; /* 縦余白を縮小 */
+  padding: 18px 16px;
   border-radius: 20px;
   width: calc(100% - 32px);
   max-width: 520px;
@@ -60,19 +60,19 @@ h1 {
   margin-bottom: 14px;
 }
 
-/* ===== 説明文（1行扱い・詰め） ===== */
+/* ===== 説明文 ===== */
 p {
   font-size: 1em;
-  line-height: 1.5;      /* 少し詰める */
-  margin-bottom: 8px;   /* 余白縮小 */
+  line-height: 1.5;
+  margin-bottom: 8px;
 }
 
-/* ===== 怪人の手紙 ===== */
+/* ===== 怪人の手紙（紙＋封蝋一体） ===== */
 .letter {
   background: url("paper_with_seal.jpg");
   background-size: cover;
   background-position: center;
-  padding: 26px 22px 54px; /* 全体的に少し詰め */
+  padding: 26px 22px 54px;
   border-radius: 15px;
   margin: 18px auto;
   min-height: 320px;
@@ -84,6 +84,17 @@ p {
   font-size: 1.1em;
   line-height: 1.6;
   text-align: center;
+}
+
+/* ===== タイピングカーソル ===== */
+#cursor {
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
 }
 
 /* ===== ボタン ===== */
@@ -121,13 +132,12 @@ button.start-btn {
 
   <h1>ヴェネチアの怪人からの挑戦</h1>
 
-  <!-- 冒頭説明：完全1行ルール -->
+  <!-- 説明文（確定版） -->
   <p>皆さま宛の特別なメッセージが、</p>
   <p>「ヴェネチアの怪人」によって隠されました。</p>
-<p>会場やテーブルの中に、手がかりが残されています。</p>
-<p>正解の早さを競うものではありません。</p>
-<p>ご自由なペースでお楽しみください。</p>
-
+  <p>会場やテーブルの中に、手がかりが残されています。</p>
+  <p>正解の早さを競うものではありません。</p>
+  <p>ご自由なペースでお楽しみください。</p>
 
   <!-- 怪人の手紙 -->
   <div class="letter">
@@ -156,8 +166,16 @@ const target = document.getElementById("message");
 let i = 0;
 const speed = 120;
 
+// カーソル追加
+const cursor = document.createElement("span");
+cursor.id = "cursor";
+cursor.textContent = "｜";
+target.appendChild(cursor);
+
 function typeWriter() {
   if (i < text.length) {
+    cursor.remove(); // 一旦カーソル外す
+
     if (text[i] === "\n") {
       target.innerHTML += "<br>";
     } else {
@@ -165,8 +183,12 @@ function typeWriter() {
       span.textContent = text[i];
       target.appendChild(span);
     }
+
+    target.appendChild(cursor); // 最後にカーソル戻す
     i++;
     setTimeout(typeWriter, speed);
+  } else {
+    cursor.remove(); // 書き終わったら消す
   }
 }
 
