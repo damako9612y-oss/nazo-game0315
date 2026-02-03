@@ -64,11 +64,10 @@ h1 {
 .letter {
   background: url("paper_with_seal.jpg");
   background-size: cover;
-  background-position: center bottom; /* 封蝋基準 */
-  padding: 26px 22px 90px;
+  background-position: center 88%; /* 封蝋を上に寄せる */
+  padding: 26px 22px 24px;         /* 下余白を最小限 */
   border-radius: 15px;
   margin: 18px auto;
-  min-height: 480px; /* ← 封蝋が必ず見える */
 }
 
 /* メッセージ本文 */
@@ -82,7 +81,7 @@ h1 {
 /* 署名 */
 .signature {
   display: block;
-  margin-top: 20px;
+  margin-top: 16px;
   font-size: 1em;
   opacity: 0.9;
 }
@@ -118,13 +117,6 @@ button.start-btn {
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  opacity: 0;
-  animation: fadeIn 1.5s ease forwards;
-  animation-delay: 9s;
-}
-
-@keyframes fadeIn {
-  to { opacity: 1; }
 }
 </style>
 </head>
@@ -178,7 +170,6 @@ const target = document.getElementById("message");
 let i = 0;
 const speed = 120;
 
-// カーソル
 const cursor = document.createElement("span");
 cursor.id = "cursor";
 cursor.textContent = "｜";
