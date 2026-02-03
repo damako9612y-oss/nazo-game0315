@@ -14,7 +14,7 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ===== 背景（nazo2と同一） ===== */
+/* ===== 背景 ===== */
 body {
   background-image: url("index_bg.jpg");
   background-size: cover;
@@ -65,7 +65,7 @@ h2 {
   margin: 10px 0 6px;
 }
 
-/* ===== カード行（絶対1行） ===== */
+/* ===== カード行 ===== */
 .card-row {
   display: flex;
   justify-content: center;
@@ -74,7 +74,7 @@ h2 {
   flex-wrap: nowrap;
 }
 
-/* ===== カード（完全固定サイズ） ===== */
+/* ===== カード ===== */
 .card {
   width: 42px;
   height: 42px;
@@ -99,7 +99,7 @@ h2 {
   white-space: nowrap;
 }
 
-/* ===== 入力欄（iOSズーム防止） ===== */
+/* ===== 入力欄 ===== */
 input.answer,
 input.keyword {
   display: block;
@@ -128,6 +128,20 @@ input.keyword {
 }
 .button.secondary {
   background-color: #666;
+}
+
+/* ===== エラーメッセージ ===== */
+.error-box {
+  display: none;
+  margin: 12px auto;
+  padding: 10px 14px;
+  max-width: 300px;
+  background: #fff0f0;
+  border: 2px solid #b03a2e;
+  border-radius: 10px;
+  color: #b03a2e;
+  font-size: 0.95em;
+  font-weight: bold;
 }
 
 /* ===== ヒント ===== */
@@ -194,16 +208,13 @@ input.keyword {
 
   <input type="text" class="answer" placeholder="回答を入力">
   <button class="button" id="submitBtn">回答する</button>
-<p id="errorMsg" style="
-  display:none;
-  margin-top:10px;
-  color:#b03a2e;
-  font-weight:bold;
-">
-  ざんねん！もう一度考えてみてください。
-</p>
 
- <button class="button secondary" id="toggleHint">ヒントを見る ▼</button>
+  <!-- エラーメッセージ -->
+  <div id="errorMsg" class="error-box">
+    ✖ ざんねん！もう一度考えてみてください。
+  </div>
+
+  <button class="button secondary" id="toggleHint">ヒントを見る ▼</button>
 
   <div class="hint-area" id="hintArea">
     <p>キーワードを入力するとヒントが表示されます</p>
@@ -220,14 +231,15 @@ input.keyword {
 
 <script>
 const correctAnswer = "CAKE";
+const errorMsg = document.getElementById("errorMsg");
 
 document.getElementById("submitBtn").addEventListener("click", () => {
   const v = document.querySelector(".answer").value.trim().toUpperCase();
   if (v === correctAnswer) {
     location.href = "nazo2.html";
- } else {
-  document.getElementById("errorMsg").style.display = "block";
-}
+  } else {
+    errorMsg.style.display = "block";
+  }
 });
 
 const toggleBtn = document.getElementById("toggleHint");
