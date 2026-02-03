@@ -60,14 +60,7 @@ h1 {
   margin-bottom: 14px;
 }
 
-/* ===== 説明文 ===== */
-p {
-  font-size: 1em;
-  line-height: 1.5;
-  margin-bottom: 8px;
-}
-
-/* ===== 怪人の手紙（紙＋封蝋一体） ===== */
+/* ===== 怪人の手紙 ===== */
 .letter {
   background: url("paper_with_seal.jpg");
   background-size: cover;
@@ -95,6 +88,15 @@ p {
 
 @keyframes blink {
   50% { opacity: 0; }
+}
+
+/* ===== 注意文 ===== */
+.notice {
+  margin-top: 12px;
+  font-size: 0.9em;
+  opacity: 0.8;
+  color: #555;
+  line-height: 1.4;
 }
 
 /* ===== ボタン ===== */
@@ -132,18 +134,18 @@ button.start-btn {
 
   <h1>ヴェネチアの怪人からの挑戦</h1>
 
-  <!-- 説明文（確定版） -->
-  <p>皆さま宛の特別なメッセージが、</p>
-  <p>「ヴェネチアの怪人」によって隠されました。</p>
-  <p>会場やテーブルの中に、手がかりが残されています。</p>
-  <p>正解の早さを競うものではありません。</p>
-  <p>ご自由なペースでお楽しみください。</p>
-
   <!-- 怪人の手紙 -->
   <div class="letter">
     <div id="message"></div>
   </div>
 
+  <!-- 注意文 -->
+  <p class="notice">
+    ――これは正解の早さを競うものではありません。<br>
+    ご自由なペースでお楽しみください。
+  </p>
+
+  <!-- 開始ボタン -->
   <button class="start-btn" onclick="location.href='nazo1.html'">
     謎を始める
   </button>
@@ -174,7 +176,7 @@ target.appendChild(cursor);
 
 function typeWriter() {
   if (i < text.length) {
-    cursor.remove(); // 一旦カーソル外す
+    cursor.remove();
 
     if (text[i] === "\n") {
       target.innerHTML += "<br>";
@@ -184,11 +186,11 @@ function typeWriter() {
       target.appendChild(span);
     }
 
-    target.appendChild(cursor); // 最後にカーソル戻す
+    target.appendChild(cursor);
     i++;
     setTimeout(typeWriter, speed);
   } else {
-    cursor.remove(); // 書き終わったら消す
+    cursor.remove();
   }
 }
 
