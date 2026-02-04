@@ -32,7 +32,7 @@ body {
   text-align: center;
 }
 
-/* language switch (same as nazo1) */
+/* ===== language switch (same as nazo1) ===== */
 .lang-switch {
   text-align: right;
   margin-bottom: 12px;
@@ -48,15 +48,22 @@ body {
   cursor: pointer;
 }
 
-/* title */
+/* ===== title ===== */
 h1 {
   font-size: 1.6em;
   color: #b03a2e;
   margin-bottom: 14px;
-  white-space: nowrap;
+  line-height: 1.2;
 }
 
-/* paper */
+/* subtitle for title */
+.subtitle {
+  font-size: 0.9em;
+  font-weight: normal;
+  display: block;
+}
+
+/* ===== paper ===== */
 .letter {
   background: url("paper_with_seal.jpg");
   background-size: cover;
@@ -72,7 +79,7 @@ h1 {
   margin-top: 40px;
 }
 
-/* message */
+/* ===== message ===== */
 #message {
   font-family: "Times New Roman", "Noto Serif", serif;
   font-size: 1.05em;
@@ -80,7 +87,7 @@ h1 {
   text-align: center;
 }
 
-/* cursor */
+/* ===== cursor ===== */
 #cursor {
   display: inline-block;
   margin-left: 2px;
@@ -90,7 +97,7 @@ h1 {
   50% { opacity: 0; }
 }
 
-/* notice */
+/* ===== notice ===== */
 .notice {
   margin-top: 12px;
   font-size: 0.9em;
@@ -99,7 +106,7 @@ h1 {
   line-height: 1.4;
 }
 
-/* button */
+/* ===== button ===== */
 .start-btn {
   display: block;
   margin: 20px auto 0;
@@ -124,7 +131,10 @@ h1 {
     <button onclick="location.href='index_kr.html'">한국어</button>
   </div>
 
-  <h1>The Phantom of Venice’s Challenge</h1>
+  <h1>
+    The Phantom of Venice<br>
+    <span class="subtitle">’s Challenge</span>
+  </h1>
 
   <div class="letter">
     <div class="letter-content">
@@ -152,7 +162,8 @@ I am the Phantom of Venice.
 To those gathered at this wedding,
 I have prepared a small trial.
 
-Gather the clues scattered around the venue,
+Gather the clues
+scattered around the venue,
 and unravel the hidden message.
 
         The Phantom of Venice`;
@@ -181,6 +192,7 @@ function typeWriter() {
     cursor.remove();
   }
 }
+
 typeWriter();
 </script>
 
