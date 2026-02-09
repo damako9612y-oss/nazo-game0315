@@ -140,16 +140,24 @@ input.keyword {
 
   <!-- Hint area -->
   <div class="hint-area" id="hintArea">
-    <p>Enter a keyword to reveal a hint</p>
-    <p class="notice">* The keyword is your destination. Check your flight ticket carefully.</p>
-
-    <input type="text" class="keyword" id="keyword3" placeholder="Enter keyword">
-    <button class="button" id="showHint3">Show Hint</button>
+    <p>
+      Enter the keyword<br>
+      to reveal a hint
+    </p>
+    <p class="notice">
+      ※The keyword is your destination.<br>
+      Check your <strong>boarding pass</strong> carefully.
+    </p>
+    <p class="notice">
+      ※The hint changes depending on the keyword.<br>
+      Work <strong>together</strong> with everyone at your table to solve the puzzle.
+    </p>
+    <input type="text" class="keyword" id="keyword1" placeholder="Enter keyword">
+    <button class="button" id="showHint1">Show Hint</button>
 
     <p class="hint-title" id="hintTitle"></p>
     <p id="hintText"></p>
   </div>
-
 </div>
 
 <script>
@@ -209,3 +217,4 @@ document.getElementById("showHint3").addEventListener("click", () => {
 
 </body>
 </html>
+
