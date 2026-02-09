@@ -198,20 +198,20 @@ input.keyword {
   <button class="button secondary" id="toggleHint">ヒントを見る ▼</button>
 
 <div class="hint-area" id="hintArea">
-  <p>
-    キーワードを入力すると<br>
-    ヒントが表示されます
-  </p>
+<p>
+  キーワードを入力すると<br>
+  ヒントが表示されます
+</p>
 
-  <p class="notice">
-    ※キーワードはあなたの行先です。<br>
-    航空券をよく見て
-  </p>
+<p class="notice">
+  ※キーワードはあなたの行先です。<br>
+  <strong>航空券</strong>をよく見て
+</p>
 
-  <p class="notice">
-    ※キーワードによってヒントが変わります。<br>
-    テーブルのみなさんで協力して挑戦してください。
-  </p>
+<p class="notice">
+  ※キーワードによってヒントが変わります。<br>
+  テーブルの皆さんで<strong>協力</strong>して挑戦してください
+</p>
 
   <input type="text" class="keyword" id="keyword1" placeholder="キーワードを入力">
   <button class="button" id="showHint1">ヒント表示</button>
@@ -242,6 +242,7 @@ toggleBtn.addEventListener("click", () => {
   toggleBtn.textContent = open ? "ヒントを見る ▼" : "ヒントを閉じる ▲";
 });
 
+<script>
 const hints = [
   { 
     keys:["LHR","LONDON"], 
@@ -258,12 +259,15 @@ document.getElementById("showHint1").addEventListener("click", () => {
   const kw = document.getElementById("keyword1").value.trim().toUpperCase();
   const result = hints.find(h => h.keys.includes(kw));
   document.getElementById("hintTitle").textContent = result ? result.title : "";
-  document.getElementById("hintText").textContent = result ? result.text : "該当するヒントがありません。";
+  document.getElementById("hintText").innerHTML =
+    result ? result.text : "該当するヒントがありません。";
 });
 </script>
 
+
 </body>
 </html>
+
 
 
 
