@@ -198,19 +198,27 @@ input.keyword {
   <button class="button secondary" id="toggleHint">ヒントを見る ▼</button>
 
 <div class="hint-area" id="hintArea">
-  <p>キーワードを入力するとヒントが表示されます</p>
-  <p class="notice">※キーワードはあなたの行先です。航空券をよく見て</p>
-  <p class="notice">
-    ※キーワードによって、ヒントは異なります。<br>
-    他の人のヒントも聞いて協力して謎を解いてください
+  <p>
+    キーワードを入力すると<br>
+    ヒントが表示されます
   </p>
 
-    <input type="text" class="keyword" id="keyword1" placeholder="キーワードを入力">
-    <button class="button" id="showHint1">ヒント表示</button>
+  <p class="notice">
+    ※キーワードはあなたの行先です。<br>
+    航空券をよく見て
+  </p>
 
-    <p class="hint-title" id="hintTitle"></p>
-    <p id="hintText"></p>
-  </div>
+  <p class="notice">
+    ※キーワードによってヒントが変わります。<br>
+    テーブルのみなさんで協力して挑戦してください。
+  </p>
+
+  <input type="text" class="keyword" id="keyword1" placeholder="キーワードを入力">
+  <button class="button" id="showHint1">ヒント表示</button>
+
+  <p class="hint-title" id="hintTitle"></p>
+  <p id="hintText"></p>
+</div>
 
 </div>
 
@@ -235,7 +243,11 @@ toggleBtn.addEventListener("click", () => {
 });
 
 const hints = [
-  { keys:["LHR","LONDON"], title:"ヒント①", text:"A B C D E F G H I J K L M N O P Q R S T U V W X Y Z" },
+  { 
+    keys:["LHR","LONDON"], 
+    title:"ヒント①", 
+    text:"A B C D E F G H I J K L<br>M N O P Q R S T U V W X<br>Y Z" 
+  },
   { keys:["ICN","SEOUL"], title:"ヒント②", text:"アルファベット順を考えよう" },
   { keys:["CDG","PARIS"], title:"ヒント③", text:"順番が大事、ちなみにZ☞A、Z☞☞Bだよ" },
   { keys:["CAI","CAIRO"], title:"ヒント④", text:"☞は何個あるかな？" },
@@ -252,5 +264,6 @@ document.getElementById("showHint1").addEventListener("click", () => {
 
 </body>
 </html>
+
 
 
