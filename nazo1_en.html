@@ -6,7 +6,6 @@
 <title>Puzzle 1</title>
 
 <style>
-/* ===== スマホ前提リセット ===== */
 html, body {
   width: 100%;
   margin: 0;
@@ -14,7 +13,6 @@ html, body {
   overflow-x: hidden;
 }
 
-/* ===== 背景（nazo2と同一） ===== */
 body {
   background-image: url("index_bg.jpg");
   background-size: cover;
@@ -23,7 +21,6 @@ body {
   padding: 24px 0;
 }
 
-/* ===== メイン枠 ===== */
 .overlay { 
   background: rgba(255,255,255,0.88); 
   padding: 22px 16px; 
@@ -35,7 +32,6 @@ body {
   text-align: center;
 }
 
-/* ===== 言語切替 ===== */
 .lang-switch {
   text-align: right;
   margin-bottom: 12px;
@@ -50,14 +46,12 @@ body {
   margin-left: 4px;
 }
 
-/* ===== 見出し ===== */
 h2 {
   font-size: 1.6em;
   color: #b03a2e;
   margin-bottom: 18px;
 }
 
-/* ===== 説明文 ===== */
 .text-above {
   font-size: 1em;
   font-weight: bold;
@@ -65,7 +59,6 @@ h2 {
   margin: 10px 0 6px;
 }
 
-/* ===== カード行（絶対1行） ===== */
 .card-row {
   display: flex;
   justify-content: center;
@@ -74,7 +67,6 @@ h2 {
   flex-wrap: nowrap;
 }
 
-/* ===== カード（完全固定サイズ） ===== */
 .card {
   width: 42px;
   height: 42px;
@@ -90,7 +82,6 @@ h2 {
   box-sizing: border-box;
 }
 
-/* ===== 矢印 ===== */
 .arrow {
   font-size: 2em;
   font-weight: bold;
@@ -99,7 +90,6 @@ h2 {
   white-space: nowrap;
 }
 
-/* ===== 入力欄（iOSズーム防止） ===== */
 input.answer,
 input.keyword {
   display: block;
@@ -113,7 +103,6 @@ input.keyword {
   text-align: center;
 }
 
-/* ===== ボタン ===== */
 .button {
   display: block;
   margin: 10px auto;
@@ -130,7 +119,6 @@ input.keyword {
   background-color: #666;
 }
 
-/* ===== ヒント ===== */
 .hint-area {
   display: none;
   margin-top: 22px;
@@ -198,21 +186,27 @@ input.keyword {
   <button class="button secondary" id="toggleHint">View Hint ▼</button>
 
   <div class="hint-area" id="hintArea">
-  <p>
-    Enter the keyword<br>
-    to reveal a hint
-  </p>
+    <p>
+      Enter the keyword<br>
+      to reveal a hint
+    </p>
 
-  <p class="notice">
-    ※The keyword is your destination.<br>
-    Check your <strong>boarding pass</strong> carefully.
-  </p>
+    <p class="notice">
+      ※The keyword is your destination.<br>
+      Check your <strong>boarding pass</strong> carefully.
+    </p>
 
-  <p class="notice">
-    ※The hint changes depending on the keyword.<br>
-    Work <strong>together</strong> with everyone at your table to solve the puzzle.
-  </p>
-</div>
+    <p class="notice">
+      ※The hint changes depending on the keyword.<br>
+      Work <strong>together</strong> with everyone at your table to solve the puzzle.
+    </p>
+
+    <input type="text" class="keyword" id="keyword1" placeholder="Enter keyword">
+    <button class="button" id="showHint1">Show Hint</button>
+
+    <p class="hint-title" id="hintTitle"></p>
+    <p id="hintText"></p>
+  </div>
 
 </div>
 
@@ -250,7 +244,7 @@ const hints = [
   { 
     keys:["CDG","PARIS"], 
     title:"Hint ③", 
-    text:"Order matters. For example, Z ☞ A, Z ☞☞ B." 
+    text:"Order matters.<br>For example, Z ☞ A,<br>Z ☞☞ B." 
   },
   { 
     keys:["CAI","CAIRO"], 
@@ -263,15 +257,15 @@ const hints = [
     text:"A food associated with weddings." 
   }
 ];
+
 document.getElementById("showHint1").addEventListener("click", () => {
   const kw = document.getElementById("keyword1").value.trim().toUpperCase();
   const result = hints.find(h => h.keys.includes(kw));
   document.getElementById("hintTitle").textContent = result ? result.title : "";
-  document.getElementById("hintText").textContent = result ? result.text : "No matching hint found.";
+  document.getElementById("hintText").innerHTML =
+    result ? result.text : "No matching hint found.";
 });
 </script>
 
 </body>
 </html>
-
-
