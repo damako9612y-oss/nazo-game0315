@@ -198,15 +198,21 @@ input.keyword {
   <button class="button secondary" id="toggleHint">View Hint ▼</button>
 
   <div class="hint-area" id="hintArea">
-    <p>Enter a keyword to reveal a hint</p>
-    <p class="notice">* The keyword is your destination. Check your flight ticket.</p>
+  <p>
+    Enter the keyword<br>
+    to reveal a hint
+  </p>
 
-    <input type="text" class="keyword" id="keyword1" placeholder="Enter keyword">
-    <button class="button" id="showHint1">Show Hint</button>
+  <p class="notice">
+    ※The keyword is your destination.<br>
+    Check your <strong>boarding pass</strong> carefully.
+  </p>
 
-    <p class="hint-title" id="hintTitle"></p>
-    <p id="hintText"></p>
-  </div>
+  <p class="notice">
+    ※The hint changes depending on the keyword.<br>
+    Work <strong>together</strong> with everyone at your table to solve the puzzle.
+  </p>
+</div>
 
 </div>
 
@@ -231,13 +237,32 @@ toggleBtn.addEventListener("click", () => {
 });
 
 const hints = [
-  { keys:["LHR","LONDON"], title:"Hint ①", text:"When you reach the end, you return to the beginning." },
-  { keys:["ICN","SEOUL"], title:"Hint ②", text:"A B C D E F G H I J K L M N O P Q R S T U V W X Y Z" },
-  { keys:["CDG","PARIS"], title:"Hint ③", text:"The order of the alphabet is important." },
-  { keys:["CAI","CAIRO"], title:"Hint ④", text:"How many ☞ are there?" },
-  { keys:["SYD","SYDNEY"], title:"Hint ⑤", text:"The answer is related to a wedding." }
+  { 
+    keys:["LHR","LONDON"], 
+    title:"Hint ①", 
+    text:"A B C D E F G H I J K L<br>M N O P Q R S T U V W X<br>Y Z" 
+  },
+  { 
+    keys:["ICN","SEOUL"], 
+    title:"Hint ②", 
+    text:"Think about the alphabetical order." 
+  },
+  { 
+    keys:["CDG","PARIS"], 
+    title:"Hint ③", 
+    text:"Order matters. For example, Z ☞ A, Z ☞☞ B." 
+  },
+  { 
+    keys:["CAI","CAIRO"], 
+    title:"Hint ④", 
+    text:"How many arrows are there?" 
+  },
+  { 
+    keys:["SYD","SYDNEY"], 
+    title:"Hint ⑤", 
+    text:"A food associated with weddings." 
+  }
 ];
-
 document.getElementById("showHint1").addEventListener("click", () => {
   const kw = document.getElementById("keyword1").value.trim().toUpperCase();
   const result = hints.find(h => h.keys.includes(kw));
@@ -248,4 +273,5 @@ document.getElementById("showHint1").addEventListener("click", () => {
 
 </body>
 </html>
+
 
