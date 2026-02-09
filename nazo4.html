@@ -136,19 +136,29 @@ input.keyword {
 
   <button class="button secondary" id="toggleHint">ヒントを見る ▼</button>
 
-  <div class="hint-area" id="hintArea">
-    <p>キーワードを入力するとヒントが表示されます</p>
-    <p class="notice">※キーワードはあなたの行先です。航空券をよく見て</p>
+ <div class="hint-area" id="hintArea">
+<p>
+  キーワードを入力すると<br>
+  ヒントが表示されます
+</p>
 
-    <input type="text" class="keyword" id="keyword4" placeholder="キーワードを入力">
-    <button class="button" id="showHint4">ヒント表示</button>
+<p class="notice">
+  ※キーワードはあなたの行先です。<br>
+  <strong>航空券</strong>をよく見て
+</p>
 
-    <p class="hint-title" id="hintTitle"></p>
-    <p id="hintText"></p>
-  </div>
+<p class="notice">
+  ※キーワードによってヒントが変わります。<br>
+  テーブルの皆さんで<strong>協力</strong>して挑戦してください
+</p>
 
+  <input type="text" class="keyword" id="keyword1" placeholder="キーワードを入力">
+  <button class="button" id="showHint1">ヒント表示</button>
+
+  <p class="hint-title" id="hintTitle"></p>
+  <p id="hintText"></p>
 </div>
-
+</div>
 <script>
 const correctAnswers = ["315", "３１５"];
 
@@ -187,3 +197,4 @@ document.getElementById("showHint4").addEventListener("click", () => {
 
 </body>
 </html>
+
